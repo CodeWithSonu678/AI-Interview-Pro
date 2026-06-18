@@ -2,7 +2,6 @@ import { createBrowserRouter } from "react-router";
 import Login from "./features/auth/pages/login";
 import Register from "./features/auth/pages/register";
 import Home from "./features/interview/pages/Home.jsx";
-import Interview from "./features/interview/pages/Interview.jsx";
 import Protected from './features/auth/components/Protected.jsx';
 import Features from './features/interview/pages/Features.jsx'
 import Pricing from './features/interview/pages/Pricing.jsx'
