@@ -1,0 +1,32 @@
+.feature-hero-section{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin-bottom: 30px ;
+}
+
+.feature-hero-section h2{
+    font-size: clamp(2rem, 6vw, 3.5rem);
+    color: var(--text-color); 
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-weight: 550;
+}
+
+.feature-hero-section .design{
+    font-size: clamp(2rem, 6vw, 3rem);
+    color: var(--var(--whitesmoke-color)-color);
+    background: linear-gradient(to right,var(--container-color-hover),#8b5cf6);
+    color: transparent;
+    -webkit-background-clip: text;
+    margin-top: -10px;
+}
+
+.feature-hero-section p{
+    font-size: clamp(1rem, 2vw, 1.2rem);
+    line-height: 1.2;
+    color: var(--muted-text);
+    margin-top: 10px;
+    
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}

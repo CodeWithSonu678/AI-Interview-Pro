@@ -1,0 +1,213 @@
+{
+
+"auth": {
+    "loginTitle": "Login",
+    "registerTitle": "Register",
+
+    "username": "Username",
+    "email": "Email",
+    "password": "Password",
+
+    "enterUsername": "Enter your username",
+    "enterEmail": "Enter your email address",
+    "enterPassword": "Enter your password",
+
+    "loginBtn": "Login",
+    "registerBtn": "Register",
+
+    "alreadyAccount": "Already have an account ?",
+    "dontHaveAccount": "Don't have an account ?",
+
+    "loginLink": "Login",
+    "registerLink": "Register",
+    "welcome":"Welcome",
+    "back":"Back!",
+    "welDescription1":"Sign in to continue to your",
+    "welDescription2":"AI Interview Pro account",
+    "card1":"Access your reports anytime",
+    "card2":"Track your progress and management",
+    "card3":"Get personalized suggestions"
+},
+
+"nav": {
+"home": "Home",
+"features": "Features",
+"howItWork": "How It Work",
+"pricing": "Pricing",
+"faq": "FAQ",
+"signIn": "Sign In"
+},
+
+"home": {
+"title": "Create Your Custom",
+"highlight":"Interview Plan",
+"subtitle": "Let our AI analyze the job requirements and your unique profile to build a winning strategy.",
+"jobDescription": "Target Job Description",
+"required": "REQUIRED",
+"jobPlaceholder": "Paste the full job description here...",
+"profile": "Your Profile",
+"uploadResume": "Upload Resume",
+"bestResults": "BEST RESULTS",
+"uploadText": "Click to upload or drag & drop",
+"pdf": "PDF (Max 3MB)",
+"or": "OR",
+"selfDescription": "Quick Self-Description",
+"selfDescriptionPlaceholder": "Briefly describe your experience, key skills, and years of experience if you don't have a resume handy...",
+"note1": "Either a",
+"note2": "Resume",
+"note3": "or",
+"note4": "Self Description",
+"note5": "is required to generate a personalized plan.",
+"generationTime": "AI-Powered Strategy Generation : Approx 30s",
+"generateBtn": "Generate My Interview Strategy",
+"recentPlans": {
+    "title": "My Recent Interview Plans",
+    "generatedOn": "Generated on",
+    "matchScore": "Match Score:"
+},
+"generatedOn": "Generated on",
+"matchScore": "Match Score"
+},
+
+"featuresPage": {
+"title": "Powerful Features To",
+"highlight": "Crack Any Interview",
+"subtitle1": "Our AI analyzes your profile and job requirements to ",
+"subtitle2":"deliver personalized insights and smart preparation."
+},
+
+"features": {
+    "feature1": {
+      "title": "AI Interview Questions",
+      "description": "Get role-specific technical and behavioral questions tailored to the job."
+    },
+
+    "feature2": {
+      "title": "Resume Analysis",
+      "description": "Deep analysis of your resume to highlight strengths and weaknesses."
+    },
+
+    "feature3": {
+      "title": "Skill Gap Detection",
+      "description": "Identify the skills you're missing and improve your chances."
+    },
+
+    "feature4": {
+      "title": "Personalized Plan",
+      "description": "Get a day-wise preparation plan customized to your needs."
+    },
+
+    "feature5": {
+      "title": "Smart Suggestions",
+      "description": "AI-powered suggestions to improve your profile and prepare better."
+    },
+
+    "feature6": {
+      "title": "Best Match Score",
+      "description": "Know how well your profile matches the job requirements."
+    }
+},
+
+"pricing": {
+    "title": "Simple, Transparent Pricing",
+    "subtitle": "Choose the plan that's right for you.",
+
+    "mostPopular": "Most Popular",
+
+    "free": {
+      "title": "Free Plan",
+      "subtitle": "For beginners",
+      "button": "Get Started",
+
+      "feature1": "1 Interview Report",
+      "feature2": "Basic Questions",
+      "feature3": "Limited Features"
+    },
+
+    "pro": {
+      "title": "Pro Plan",
+      "subtitle": "For serious learners",
+      "button": "Upgrade Now",
+
+      "feature1": "Unlimited Reports",
+      "feature2": "Advanced AI Analysis",
+      "feature3": "Skill Gap & Plan",
+      "feature4": "Priority Support"
+    },
+
+    "premium": {
+      "title": "Premium Plan",
+      "subtitle": "For professionals",
+      "button": "Upgrade Now",
+
+      "feature1": "Everything in Pro",
+      "feature2": "Resume Optimization",
+      "feature3": "Mock Interviews",
+      "feature4": "Dedicated Support",
+      "feature5": "Career Guidance"
+    }
+},
+
+
+"howItWorks": {
+    "title": "How It",
+    "highlight": "Work",
+    "subtitle": "Generate your personalized interview strategy in 3 easy steps.",
+
+    "step1": {
+      "title": "Upload Resume",
+      "description": "Upload your resume in PDF or DOCX format. Our AI will analyze it thoroughly."
+    },
+
+    "step2": {
+      "title": "Add Job Description",
+      "description": "Paste the job description so AI can understand the requirements."
+    },
+
+    "step3": {
+      "title": "Get AI Report",
+      "description": "Receive your personalized interview report with questions, skill gaps and preparation plan."
+    },
+
+    "whatYouGet": "What you will get:",
+    "technical": "Technical & Behavioral Questions",
+    "matchScore": "Match Score",
+    "skillGap": "Skill Gap Analysis",
+    "plan": "Personalized Preparation Plan"
+},
+
+"faq": {
+    "title1": "Frequently",
+    "title2": "Asked Questions",
+    "subtitle": "Find answers to common questions",
+    "answer":"answer",
+    "supportTitle": "Still have questions?",
+    "supportText": "Contact our support team",
+
+    "email": "support@aiinterviewpro.com",
+    "question1": "What is AI Interview Pro?",
+    "answer1": "AI Interview Pro is an AI-powered platform that analyzes your profile and job requirements to create a personalized interview preparation plan.",
+
+    "question2": "How does the AI generate interview questions?",
+    "answer2": "Our AI analyzes the job description, required skills, and your profile to generate relevant technical and behavioral interview questions.",
+
+    "question3": "Is my data secure?",
+    "answer3": "Yes. Your resume and personal information are processed securely and are never shared with third parties without your consent.",
+
+    "question4": "What file formats are supported?",
+    "answer4": "You can upload resumes in PDF and DOCX formats. We recommend using a well-structured resume for the best analysis results.",
+
+    "question5": "Can I download my report?",
+    "answer5": "Yes. After analysis, you can download your interview report and preparation plan for future reference.",
+
+    "question6": "Can I get a refund?",
+    "answer6": "Refund eligibility depends on your subscription plan and usage. Please contact our support team for assistance."
+},
+
+"footer": {
+"privacy": "Privacy Policy",
+"terms": "Terms of Service",
+"help": "Help Center",
+"copyright": "2024 AI Interview Pro. All rights reserved."
+}
+}

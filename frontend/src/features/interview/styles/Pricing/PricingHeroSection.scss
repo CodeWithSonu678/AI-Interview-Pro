@@ -1,0 +1,26 @@
+.pricing-hero-section{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin-bottom: 30px ;
+}
+
+.pricing-hero-section h3{
+    font-size: clamp(2rem, 6vw, 3.5rem);
+    background: var(--gradient);
+    color: transparent;
+    -webkit-background-clip: text;
+    font-weight: 600;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.pricing-hero-section p{
+    font-size: clamp(1rem, 2vw, 1.4rem);
+    line-height: .2;
+    letter-spacing: .3;
+    color: var(--muted-text);
+    margin-top: 15px;
+    font-weight: 450;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}

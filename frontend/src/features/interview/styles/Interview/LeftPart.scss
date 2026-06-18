@@ -1,0 +1,87 @@
+.btns{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.l-btn,.download-btn{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px 8px;
+    gap: 6px;
+    font-size: clamp(.9rem,2vw,1rem);
+    background: var(--question-card);
+}
+
+.l-btn.active{
+    background: rgba(255,45,117,.15);
+    border: 1px solid #ff2d75;
+    color: #ff2d75;
+}
+
+.download-btn{
+    margin-top: 20px;
+}
+
+
+@media (max-width: 775px) {
+
+    .btns{
+        display: flex;
+        flex-direction: row;
+        gap: 12px;
+
+        overflow-x: auto;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+
+        padding-bottom: 5px;
+    }
+
+    .btns::-webkit-scrollbar{
+        display: none;
+    }
+
+    .btns p{
+        display: none;
+    }
+
+    .l-btn,.download-btn{
+        flex: 0 0 auto;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+
+        min-width: max-content;
+
+        padding: 12px 12px;
+
+        border-radius: 12px;
+        border: none;
+        background-color: var(--interview-card-color)
+    }
+
+    .leftBtn-title{
+        white-space: nowrap;
+        font-size: .85rem;
+    }
+
+    .left-icon{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .left-icon svg{
+        width: 18px;
+        height: 18px;
+        flex-shrink: 0;
+    }
+
+    .download-btn{
+        margin: 0;
+    }
+}

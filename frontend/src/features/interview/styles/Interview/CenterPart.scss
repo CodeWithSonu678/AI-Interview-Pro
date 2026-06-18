@@ -1,0 +1,265 @@
+// title section ka code start here
+
+.title-section{
+    display: flex;
+    gap: 10px;
+    padding: 20px;
+    border-bottom: 1px solid var(--border-color);
+    padding-top: 0px;
+}
+
+.title-section h3{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: clamp(.8rem,2vw,1.2rem);
+    color: var(--text-color);
+}
+
+.title-section span{
+    border: 1px solid var(--border-hover);
+    padding: 4px 8px;
+    border-radius: 10px;
+    font-size: clamp(.5rem,1vw,1rem);
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: var(--muted-text);
+    background-color: var(--interview-card-color);
+}
+
+// title section ka code end here
+
+// Question section ka code start here
+.questions-sections{
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    
+}
+
+.q-container{
+    border: 1px solid var(--border-hover);
+    border-radius: 10px;
+    background: var(--question-card);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    overflow: hidden;
+}
+
+.questions-sections .question{
+    padding: 10px;
+    
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.questions-sections .q-container .question .question-left{
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.question-text{
+    margin: 0;
+    line-height: 1.6;
+    font-size: clamp(.5rem,1vw,1.2rem);
+    color: var(--text-color);
+}
+
+.questions-sections .question div .q-no{
+    width: 30px;
+    height: 30px;
+    border-radius: 5px;
+    padding: 4px 6px;
+    color: var(--primary);
+    border: 1px solid var(--primary);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 500;
+}
+
+.question span{
+    flex-shrink: 0;
+    margin-left: 10px;
+}
+
+.answer-box{
+    padding: 10px;
+    border-top:1px solid var(--border-hover) ;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.answer-box .intention{
+    color: #a78bfa;
+    background-color: rgba(#a78bfa, 0.1);
+    border: 1px solid rgba(#a78bfa, 0.2);
+    width: fit-content;
+    padding: 4px 8px;
+    border-radius: 5px;
+    font-size: clamp(.7rem,1vw,.9rem);
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.answer-box .model{
+    color: #3fb950;
+    background-color: rgba(#3fb950, 0.1);
+    border: 1px solid rgba(#3fb950, 0.2);
+    width: fit-content;
+    padding: 4px 8px;
+    border-radius: 5px;
+    font-size: clamp(.7rem,1vw,.9rem);
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.answer-box p{
+    color: var(--muted-text);
+    font-size: clamp(.7rem,1vw,.9rem);
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+@media(max-width:775px){
+    .title-section {
+        padding: 15px;
+        border: none;
+    }
+
+    .questions-sections{
+        padding: 10px;
+    }
+
+    .question{
+        padding: 15px;
+    }
+
+    .question-left{
+        align-items: flex-start;
+    }
+
+    .question-text{
+        font-size: .95rem;
+        line-height: 1.7;
+    }
+
+    .q-no{
+        flex-shrink: 0;
+    }
+}
+
+// Road Map ka code here
+
+.timeline-title{
+    border-bottom: 2px solid var(--border-color);
+}
+.timeline{
+    padding: 15px 0px 0px 40px;
+    position: relative;
+}
+
+.timeline::before{
+    content: "";
+    top: 20px;
+    bottom: 0;
+    position: absolute;
+    width: 3px;
+    background: linear-gradient(
+        to bottom,
+        #ff2d75 0%,
+        #ff2d75 80%,
+        rgba(255,45,117,.15) 100%
+    );
+    border-radius: 1px;
+}
+
+.timeline-item{
+    position: relative;
+    margin-bottom: 5px;
+    
+}
+
+.timeline-item  .timeline-dot{
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 3px solid var(--primary);
+    top: 25px;
+    left: -9px;
+    background: var(--card-hover);
+}
+
+.timeline-day{
+    display:inline-block;
+
+    padding:4px 10px;
+
+    border-radius:999px;
+
+    background:rgba(255,45,117,.15);
+
+    border:1px solid #ff2d75;
+
+    color:#ff2d75;
+
+    font-size:clamp(.4rem,1vw,.7rem);
+    font-weight:600;
+}
+
+.timeline-heading{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:22px 0px 0px 30px;
+}
+
+.timeline-heading .topic{
+    font-size: clamp(.9rem,2vw,1.2rem);
+    font-weight: 520;
+    color: var(--text-color);
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.topic-list{
+    display: flex;
+    flex-direction: column;
+    padding: 10px 0px 0px 50px;
+    gap: 8px;
+}
+
+.topic-list li{
+    line-height: 1.4;
+    color: var(--dark-muted);
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: clamp(.85rem,1vw,1.2rem);
+}
+
+.li-dot{
+    flex-shrink: 0;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background-color: var(--dark-muted);
+    margin-top: 8px;
+}
+        
+// road map ka code end here
+
+@media(max-width:775px){
+    .timeline-title h2{
+        font-size: 1rem;
+    }
+
+    .timeline-day{
+        padding: 2px 5px;
+        border-radius: 5px;
+        font-size: .8rem;
+    }
+
+    .timeline-heading{
+        padding-left: 25px;
+    }
+}

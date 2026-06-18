@@ -1,0 +1,325 @@
+.plan-section{
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+
+    padding: 20px;
+}
+
+.plan-container{
+    margin-bottom: 0px;
+    width: 100%;
+    display: grid;
+    grid-template-columns:repeat(auto-fit,minmax(400px,1fr));
+    background: var(--card-bg);
+    border-radius: 25px;
+}
+
+@media (max-width:768px){
+
+    .plan-section{
+        padding: 15px;
+    }
+
+    .plan-container{
+        grid-template-columns: 1fr;
+    }
+
+}
+
+.job-section{
+    border: 3px solid var(--border-color);
+    border-radius: 20px 0 0 0px;
+    padding: 20px;
+}
+
+.job-title-container{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.job-title-container span{
+    font-size: 16px;
+    font-weight: 700;
+    color:var(--card-border-hover) ;
+    background: rgba(var(--primary) , .2) ;
+    padding: 5px 10px;
+    border-radius: 10px;
+}
+
+.job-logo{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}
+
+.job-logo h3{
+    font-size: 18px;
+    letter-spacing: .5px;
+}
+
+.textarea-box textarea{
+    width: 100%;
+    height: 80vh;
+    max-height: 400px;
+    background: var(--input-bg);
+    margin-top: 15px;
+    border-radius: 10px;
+    border: 2px solid var(--border-color);
+    outline: none;
+    padding: 20px;
+    position: relative;
+    color: var(--text-color);
+    font-size: 18px;
+}
+
+.textarea-box textarea::placeholder{
+    color: var(--muted-text);
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 1.7;
+    letter-spacing: 1px;
+}
+
+.textarea-box p{
+    color: var(--muted-text);
+    font-weight: 500;
+    font-size: 14px;
+    text-align: right;
+}
+
+.textarea-box textarea:focus{
+    border-color: var(--card-border-hover);
+    outline: none;
+}
+
+.profile-section{
+    border: 3px solid var(--border-color);
+    border-radius: 0 20px 0 0;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 11px;
+}
+
+.profile-logo{
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+.profile-logo h4{
+    color: var(--text-color);
+    font-size: 18px;
+    letter-spacing: .5px;
+}
+
+//upload code here
+
+.upload-section{
+    display: flex;
+    flex-direction: column;   
+}
+
+.upload-section .upload-top{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.upload-top h4{
+    font-size: 14px;
+    letter-spacing: .5px;
+    font-weight: 600;
+}
+
+.upload-top span{
+    font-size: 16px;
+    font-weight: 600;
+    color:var(--card-border-hover) ;
+    background: rgba(var(--primary) , .2) ;
+    padding: 4px 8px;
+    border-radius: 10px;
+    letter-spacing: .3px;
+}
+
+.upload-box{
+    width: 100%;
+    border: 2px dashed var(--border-hover);
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: var(--card-bg);
+    margin-top: 15px;
+    border-radius: 15px;
+}
+
+.upload-box.uploaded{
+    border-color: #22c55e;
+    background: rgba(34,197,94,.08);
+}
+
+.upload-box label{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+
+.upload-box label .upload-hint{
+    font-weight: 500;
+    letter-spacing: .2px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+.upload-size{
+    color: var(--muted-text);
+    font-size: 13px;
+    font-weight: 600;
+}
+
+// divider code here
+
+
+.divider {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 100%;
+    gap: 10px;
+}
+
+.divider::before,
+.divider::after{
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: var(--divider-color);
+}
+
+//self desciption code here 
+
+.self-description{
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.self-description h4{
+    font-size: 16px;
+    color: var(--text-color);
+    letter-spacing: .3px;
+    font-weight: 550;
+}
+
+.self-description textarea{
+    width: 100%;
+    min-height: 80px ;
+    background: var(--input-bg);
+    border-radius: 10px;
+    border: 2px solid var(--border-color);
+    outline: none;
+    padding: 10px;
+    color: var(--text-color);
+    font-size: 15px;
+}
+
+.self-description textarea::placeholder{
+    color: var(--muted-text);
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 1.5;
+    letter-spacing: .5px;
+}
+
+.self-description textarea:focus{
+    border-color: var(--card-border-hover);
+    outline: none;
+    box-shadow: 0 0 10px rgba(255, 77, 157, 0.3);
+}
+
+//info section code here
+
+.info-section{
+    width: 100%;
+
+    border: 1px solid #3b82f6;
+    background: rgba(#3b82f6 , .1) ;
+    border-radius: 8px;
+    padding: 10px 25px 10px 15px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+}
+
+.info-section .info-icon{
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    background: #3b82f6;
+    font-size: 8px;
+}
+
+.info-section p{
+    color: var(--secondary-text);
+}
+
+.info-section .info-model{
+    color: var(--text-color);
+    font-weight: 500;
+}
+
+//bottom part code here
+
+.bottom-section{
+    width: 100%;
+    min-height: 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 3px solid var(--border-color);
+    border-top: none;
+    border-radius: 0px 0 20px 20px;
+    padding: 0 20px;
+}
+
+.bottom-section p{
+    color: var(--secondary-text);
+    font-size: 18px;
+}
+
+.bottom-section .generate-btn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    padding: 5px 10px;
+    border-radius: 10px;
+    margin-top: 0px;
+    outline: none;
+    border: none;
+    background: var(--primary);
+    color: var(--text-color);
+    font-weight: 500;
+    font-family: sans-serif;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    &:active{
+        transform: scale(0.95);
+    }
+}

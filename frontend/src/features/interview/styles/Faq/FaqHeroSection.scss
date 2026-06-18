@@ -1,0 +1,31 @@
+.hero-section{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 25px;
+}
+
+.hero-section h2{
+    font-size: clamp(2rem, 6vw, 3.5rem);
+    color: var(--text-color); 
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-weight: 500;
+}
+
+.hero-section h2 span{
+    background:--bg-color;
+
+    -webkit-background-clip: text;
+
+    -webkit-text-fill-color: transparent;
+}
+
+.hero-section p{
+    font-size: clamp(1rem, 2vw, 1.2rem);
+    line-height: 1.2;
+    color: var(--muted-text);
+    margin-top: 10px;
+    
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}

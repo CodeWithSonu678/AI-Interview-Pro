@@ -1,0 +1,257 @@
+.auth-main{
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .login-container{
+        max-width: 1800px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        border: 2px solid var(--border-color);
+        padding: 30px;
+        background: var(--login-container-bg);
+        gap: 20px;
+        border-radius: 15px;
+    }
+
+    // left part code here
+
+    .login-left{
+        width: 350px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        width: 100%;
+        gap: 15px;
+        padding: 20px;
+        opacity: 0;
+        animation: leftSide .8s ease forwards;
+        animation-delay: .3s;
+        background: var(--login-left-bg);
+    }
+
+    @keyframes leftSide {
+        from{
+            opacity: 0;
+            transform: translateX(-50px);
+        }
+
+        to{
+            opacity: 1;
+            transform: translateX(0px);
+        }
+    }
+
+    .login-title-section{
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .login-title-section  .welTitle{
+        font-size: clamp(2rem,5vw,3.8rem);
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        font-weight: 550;
+        animation: floatText 3s ease-in-out infinite;
+    }
+
+    @keyframes floatText{
+
+        0%,100%{
+            transform: translateY(0);
+        }
+
+        50%{
+            transform: translateY(-8px);
+        }
+    }
+
+    .login-title-section  .welTitle .backTitle{
+        font-size: clamp(2rem,5vw,3.8rem);
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        font-weight: 550;
+        background: linear-gradient(
+            90deg,
+            #ff2d75,
+            #ff6aa7
+        );
+        -webkit-background-clip: text;
+
+        -webkit-text-fill-color: transparent;
+    }
+
+    .login-title-section .login-description{
+        color: var(--muted-text);
+        font-size: clamp(.5rem,2vw,1rem);
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        font-weight: 520;
+        letter-spacing: .3px;
+        line-height: 1.4;
+    }
+
+    .login-properties{
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-top: 20px;
+    }
+
+    .login-properties .property{
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        
+    }
+
+    .property{
+        opacity: 0;
+        animation: fadeUp .5s ease forwards;
+    }
+
+    .property:nth-child(1){
+        animation-delay: .9s;
+    }
+
+    .property:nth-child(2){
+        animation-delay: 1.1s;
+    }
+
+    .property:nth-child(3){
+        animation-delay: 1.3s;
+    }
+
+    @keyframes fadeUp{
+        from{
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        to{
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .property .p-icon{
+        color: var(--secondary-text);
+        font-size: clamp(.5rem,2vw,1.8rem);
+    }
+
+    .property .p-title{
+        color: var(--muted-text);
+        font-size: clamp(.5rem,2vw,1rem);
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        font-weight: 520;
+        letter-spacing: .3px;
+        line-height: 1.4;
+    }
+
+
+    // right part code here
+
+    .form-container{
+        width: 100%;
+        max-width: 450px;
+        padding: 2rem;
+        border: 2px solid var(--border-color);
+        // background-color: var(--card-bg);
+        background: var(--login-form-bg);
+        border-radius: .75rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        opacity: 0;
+        animation: slideRight 0.8s ease forwards;
+        animation-delay: .7s;
+
+        @keyframes slideRight{
+
+            from{
+                opacity: 0;
+                transform: translateX(50px);
+            }
+
+            to{
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        h1{
+            text-align: center;
+            font-size: 32px;
+        }
+    }
+
+    form{
+        display: flex;
+        flex-direction: column;
+        gap: .5rem;
+    }
+    .input-group{
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    input{
+        width: 100%;
+        padding-inline: 1.5rem;
+        padding-block: .75rem;
+        border: none;
+        outline: none;
+        border-radius: .75rem;
+        background-color: var(--text-color);
+    }
+
+    input::placeholder{
+        font-size: 15px;
+        color: var(--muted-text);
+    }
+    label{
+        font-size: 18px;
+    }
+
+    a{
+        text-decoration: none;
+        color: var(--primary);
+    }
+}
+
+@media (max-width:768px){
+
+    .auth-main{
+
+        .login-container{
+            grid-template-columns: 1fr;
+            max-width: 95%;
+            padding: 15px;
+            gap: 15px;
+        }
+
+        .login-left{
+            order: 2;
+            padding: 15px;
+        }
+
+        .form-container{
+            order: 1;
+            width: 100%;
+        }
+
+        .login-title-section .welTitle{
+            font-size: 2rem;
+            text-align: center;
+        }
+
+        .login-title-section .login-description{
+            text-align: center;
+        }
+
+        .login-properties .property{
+            justify-content: flex-start;
+        }
+    }
+}

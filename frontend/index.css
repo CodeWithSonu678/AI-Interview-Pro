@@ -1,0 +1,119 @@
+:root{
+  --bg-color: #050816;
+  --card-bg: #0d111e;
+  --question-card: linear-gradient(
+        180deg,
+        #232b3f 0%,
+        #1d2435 100%
+    );
+  --card-hover: #161b2e;
+  --interview-card-color:#94a3b82b;
+  --input-bg: #111827;
+  --btn-bg:#0b1220;
+  --container-color-hover:#ff2ea6;
+  --icon-bg-color:rgba(255,45,117,.15);
+  /* Parent Container */
+    --login-container-bg: #f8fafc;
+
+    /* Left Section */
+    --login-left-bg: #ffffff;
+
+    /* Right Form */
+    --login-form-bg: #f1f5f9;
+
+  --text-color: #ffffff;
+  --whitesmoke-color:whitesmoke;
+  --secondary-text: #cbd5e1;
+  --dark-muted: #7d8590;
+  --muted-text: #94a3b8;
+
+  --border-color: #1f2937;
+  --circle-color:#4af967;
+  --border-hover: #2a3348;
+  --divider-color: #1a1f2e;
+  --card-border-hover:#ff4d9d;
+
+  --primary: #ff2d75;
+  --line-color:#ff2d78;
+  --primary-hover: #e11d5e;
+  --accent: #a855f7;
+  --secondary-accent: #6366f1;
+
+  --success: #22c55e;
+  --warning: #fbbf24;
+  --info: #3b82f6;
+  --error: #ef4444;
+
+  --gradient:
+    linear-gradient(
+      135deg,
+      #ff2d75,
+      #a855f7
+    );
+}
+
+body{
+    background: var(--bg-color);
+    color: var(--text-color);
+    transition: background-color .3s ease,color .3s ease;;
+}
+
+[data-theme="dark"]{
+  --bg-color: #050816;
+  --card-bg: #0d111e;
+  --card-hover: #161b2e;
+  --input-bg: #111827;
+  /* Parent Container */
+    --login-container-bg: #0f172a;
+
+    /* Left Section */
+    --login-left-bg: #131c31;
+
+    /* Right Form */
+    --login-form-bg: #1f2937;
+
+  --text-color: #ffffff;
+  --secondary-text: #cbd5e1;
+  --muted-text: #94a3b8;
+
+  --border-color: #1f2937;
+  --border-hover: #2a3348;
+  --divider-color: #1a1f2e;
+
+  --primary: #ff2d75;
+  --primary-hover: #e11d5e;
+  --accent: #a855f7;
+  --secondary-accent: #6366f1;
+
+  --success: #22c55e;
+  --warning: #fbbf24;
+  --info: #3b82f6;
+  --error: #ef4444;
+}
+
+[data-theme="light"]{
+  --bg-color: #f8fafc;
+  --card-bg: #ffffff;
+  --card-hover: #f1f5f9;
+  --input-bg: #ffffff;
+  --question-card:#ffffff;
+
+  --text-color: #111827;
+  --secondary-text: #475569;
+  --muted-text: #64748b;
+
+  --border-color: #cbd5e1;
+  --border-hover: #94a3b8;
+  --divider-color: #e2e8f0;
+
+  --primary: #ff2d75;
+  --primary-hover: #e11d5e;
+  --accent: #a855f7;
+  --secondary-accent: #6366f1;
+
+  --success: #22c55e;
+  --warning: #fbbf24;
+  --info: #3b82f6;
+  --error: #ef4444;
+}
+

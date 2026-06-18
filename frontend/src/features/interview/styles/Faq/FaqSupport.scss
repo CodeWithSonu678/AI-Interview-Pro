@@ -1,0 +1,36 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.faq-support{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+    padding: 15px 0px;
+}
+
+.faq-support .first,.second,.third{
+    font-size: clamp(1rem,2vw,1.4rem);
+    letter-spacing: .3px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    transition: .3s transform ease;
+}
+
+.faq-support .first:hover,.second:hover,.third:hover{
+    transform: translateY(-5px) scale(1.03);
+}
+
+.faq-support .first{
+    color: var(--var(--whitesmoke-color)-color);
+}
+.faq-support .second{
+    color: var(--muted-text);
+}
+.faq-support .third{
+    color: var(--card-border-hover);
+}
+

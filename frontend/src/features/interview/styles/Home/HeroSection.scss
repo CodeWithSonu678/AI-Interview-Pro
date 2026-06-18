@@ -1,0 +1,33 @@
+.hero-section{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 25px;
+}
+
+.hero-section h2{
+    font-size: 50px;
+    color: var(--text-color);
+}
+
+.hero-section h2 span{
+    background: linear-gradient(
+        to right,
+        var(--container-color-hover),
+        #8b5cf6
+    );
+
+    -webkit-background-clip: text;
+
+    -webkit-text-fill-color: transparent;
+}
+
+.hero-section p{
+    color: var(--muted-text);
+    font-size: 21px;
+    max-width: 640px;
+    line-height: 1.4;
+    margin: auto;
+    text-align: center;
+}
