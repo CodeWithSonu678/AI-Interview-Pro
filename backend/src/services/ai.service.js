@@ -276,7 +276,11 @@ ${jobDescription}
       console.log("Rate limit exceeded. Try again later.");
     }
 
-    console.log(error.message);
+    if (error?.status === 503) {
+        throw new Error("AI_SERVER_BUSY");
+    }
+
+    console.error("Gemini Error:", error);
 
     return null;
   }

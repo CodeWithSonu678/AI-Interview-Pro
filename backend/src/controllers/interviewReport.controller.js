@@ -7,39 +7,39 @@ const {
 const { success } = require("zod");
 
 async function generateInterviewReportController(req, res) {
-  const { jobDescription, selfDescription } = req.body;
-
-  let resumeContent = "";
-
-  if (req.file) {
-    resumeContent = await new pdfParse.PDFParse(
-      Uint8Array.from(req.file.buffer),
-    ).getText();
-  } else if (selfDescription) {
-    resumeContent = {
-      text: selfDescription,
-    };
-  } else {
-    return res.status(400).json({
-      success: false,
-      message: "Resume file or self description is required",
-    });
-  }
-
-  const interviewReportByAi = await generateInterviewReport({
-    selfDescription,
-    resumeContent,
-    jobDescription,
-  });
-
-  if (!interviewReportByAi) {
-    return res.status(500).json({
-      success: false,
-      message: "Failed to generate interview report",
-    });
-  }
-
   try {
+    const { jobDescription, selfDescription } = req.body;
+
+    let resumeContent = "";
+
+    if (req.file) {
+      resumeContent = await new pdfParse.PDFParse(
+        Uint8Array.from(req.file.buffer),
+      ).getText();
+    } else if (selfDescription) {
+      resumeContent = {
+        text: selfDescription,
+      };
+    } else {
+      return res.status(400).json({
+        success: false,
+        message: "Resume file or self description is required",
+      });
+    }
+
+    const interviewReportByAi = await generateInterviewReport({
+      selfDescription,
+      resumeContent,
+      jobDescription,
+    });
+
+    if (!interviewReportByAi) {
+      return res.status(503).json({
+        success: false,
+        message: "AI service unavailable",
+      });
+    }
+
     const interviewReport = await interviewReportModel.create({
       selfDescription,
       resume: resumeContent.text,
@@ -54,11 +54,22 @@ async function generateInterviewReportController(req, res) {
       interviewReport,
     });
   } catch (error) {
-    console.log(error);
-    res.status(200).json({
-      success: false,
-      msg: "something went wrong in database !",
+
+    if (error.message === "AI_SERVER_BUSY") {
+        return res.status(503).json({
+            success: false,
+            message:
+              "AI server is busy. Please try again in a few minutes."
+        });
+    }
+
+    return res.status(500).json({
+        success: false,
+        message: error.message || "Internal Server Error"
     });
+
+    console.error("Generate Report Error:", error);
+
   }
 }
 
