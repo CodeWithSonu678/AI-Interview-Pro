@@ -51,6 +51,7 @@ export const useInterview = () => {
             );
 
             console.error(error);
+            throw error;
         } finally {
             setLoading(false)
         }
@@ -72,6 +73,7 @@ export const useInterview = () => {
             }
 
             console.error(error);
+            throw error;
         } finally {
             setLoading(false)
         }

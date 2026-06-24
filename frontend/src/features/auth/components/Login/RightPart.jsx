@@ -14,7 +14,8 @@ const RightPart = ({ t, loginHandle, googleLoginHandle }) => {
         try {
             const data = await loginHandle(email, password)
 
-            setErrMsg(data.msg);
+            setErrMsg(data.msg || "Failed Login");
+            console.log(errMsg)
 
             setTimeout(() => {
                 setErrMsg("");

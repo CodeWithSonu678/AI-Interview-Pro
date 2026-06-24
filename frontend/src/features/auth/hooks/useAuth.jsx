@@ -1,7 +1,8 @@
 import { useContext, useEffect } from "react";
 import { AuthContext } from "../auth.context.jsx";
 import { login, register, logout, getMe, googleLogin } from '../services/auth.api.js';
-import {useNavigate} from 'react-router'
+import { useNavigate } from 'react-router'
+import toast from "react-hot-toast";
 
 export const useAuth = () => {
 
@@ -38,6 +39,10 @@ export const useAuth = () => {
             setUser(data)
             return data;
         } catch (error) {
+            toast.error(
+                error?.response?.data?.msg ||
+                "Failed Login"
+            );
             throw error?.res?.data?.msg || error || "Login Failed !";
         } finally {
             setLoading(false)
@@ -63,7 +68,7 @@ export const useAuth = () => {
         try {
             const data = await googleLogin(token)
 
-            if (data.success===true) {
+            if (data.success === true) {
                 Navigate('/')
             }
             return data;
