@@ -2,6 +2,7 @@ import { useContext, useEffect } from 'react';
 import { generateInterviewReportApi, allInterviewReportsApi, interviewReportByIdApi, generateResumePdfApi } from '../services/interview.api';
 import { InterviewContent } from '../interview.content';
 import { useParams } from 'react-router'
+import toast from 'react-hot-toast';
 
 export const useInterview = () => {
     const content = useContext(InterviewContent);
@@ -16,11 +17,23 @@ export const useInterview = () => {
         setLoading(true)
         try {
             const data = await generateInterviewReportApi({ selfDescription, jobDescription, resumeFile });
-            
+
             setReport(data.interviewReport)
+            toast.success("Interview report generated successfully");
             return data.interviewReport;
         } catch (error) {
-            throw error
+            if (error?.response?.status === 503) {
+                toast.error(
+                    "AI server is busy right now. Please try again later."
+                );
+            } else {
+                toast.error(
+                    error?.response?.data?.message ||
+                    "Failed to generate interview report"
+                );
+            }
+
+            return null;
         } finally {
             setLoading(false)
         }
@@ -30,9 +43,14 @@ export const useInterview = () => {
         setLoading(true)
         try {
             const data = await allInterviewReportsApi();
-            setReports(data.interviewReports)
+            setReports(data.interviewReports || [])
         } catch (error) {
-            throw error
+            toast.error(
+                error?.response?.data?.msg ||
+                "Failed to fetch interview reports"
+            );
+
+            console.error(error);
         } finally {
             setLoading(false)
         }
@@ -44,7 +62,16 @@ export const useInterview = () => {
             const data = await interviewReportByIdApi(interviewId);
             setReport(data.interviewReport)
         } catch (error) {
-            throw error
+            if (error?.response?.status === 404) {
+                toast.error("Interview report not found");
+            } else {
+                toast.error(
+                    error?.response?.data?.msg ||
+                    "Failed to fetch report"
+                );
+            }
+
+            console.error(error);
         } finally {
             setLoading(false)
         }
@@ -69,9 +96,19 @@ export const useInterview = () => {
             link.remove();
 
             window.URL.revokeObjectURL(url);
+            toast.success("Resume downloaded successfully");
 
         } catch (error) {
-            throw error
+            if (error?.response?.status === 404) {
+                toast.error("Interview report not found");
+            } else {
+                toast.error(
+                    error?.response?.data?.msg ||
+                    "Failed to generate PDF"
+                );
+            }
+
+            console.error(error);
         } finally {
             setLoading(false)
         }

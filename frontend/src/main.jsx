@@ -5,12 +5,15 @@ import "../index.css"
 import InterviewProvider from './features/interview/interview.theme.context.jsx'
 import './i18n.js'
 import {GoogleOAuthProvider} from '@react-oauth/google'
+import { Toaster } from "react-hot-toast";
+
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <GoogleOAuthProvider clientId='99986870363-kbh8ltco3c3tbihckkcn61f7bmnoe9se.apps.googleusercontent.com'>
       <InterviewProvider>
         <App />
+        <Toaster position="top-right" />
       </InterviewProvider>
     </GoogleOAuthProvider>
   </StrictMode>,
