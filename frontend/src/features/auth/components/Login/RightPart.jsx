@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useNavigate, Link } from 'react-router';
 import { GoogleLogin } from '@react-oauth/google'
+import toast from "react-hot-toast";
 
 const RightPart = ({ t, loginHandle, googleLoginHandle, errMsg, setErrMsg }) => {
 
@@ -63,7 +64,7 @@ const RightPart = ({ t, loginHandle, googleLoginHandle, errMsg, setErrMsg }) => 
                         try {
                             await googleLoginHandle(response.credential);
                         } catch (error) {
-                            errMsg(error)
+                            setErrMsg(error?.response?.data?.msg || "Google login failed");
                             toast.error(
                                 error?.response?.data?.msg ||
                                 "Google login failed"

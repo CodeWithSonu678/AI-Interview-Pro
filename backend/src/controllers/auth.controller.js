@@ -2,13 +2,13 @@ const authModel = require("../models/auth.model");
 const BlackListModel = require("../models/blacklist.model");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
-const {OAuth2Client} = require("google-auth-library");
+const { OAuth2Client } = require("google-auth-library");
 
 async function regUser(req, res) {
   const { username, email, password } = req.body;
 
   if (!username || !email || !password) {
-    return res.status(200).json({
+    return res.status(400).json({
       msg: "All fields are required !",
       success: false,
     });
@@ -20,7 +20,7 @@ async function regUser(req, res) {
     });
 
     if (isAlreadyReg) {
-      return res.status(200).json({
+      return res.status(409).json({
         msg: "You are already registered !",
         success: false,
       });
@@ -61,7 +61,7 @@ async function loginUser(req, res) {
   const { email, password } = req.body;
 
   if (!email || !password) {
-    return res.status(200).json({
+    return res.status(400).json({
       msg: "All fields are required !",
       success: false,
     });
@@ -80,7 +80,7 @@ async function loginUser(req, res) {
     const isValidPassword = await bcrypt.compare(password, user.password);
 
     if (!isValidPassword) {
-      return res.status(200).json({
+      return res.status(401).json({
         msg: "Invalid Password !",
         success: false,
       });
@@ -130,7 +130,7 @@ async function logoutUser(req, res) {
     });
   } catch (error) {
     console.log(error.message);
-    res.status(401).json({
+    res.status(500).json({
       msg: "Server Error !",
       success: false,
     });
@@ -159,46 +159,45 @@ async function getMe(req, res) {
   }
 }
 
-async function googleLogin(req,res){
-  const {token} = req.body;
+async function googleLogin(req, res) {
+  const { token } = req.body;
 
   const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
   const ticket = await client.verifyIdToken({
-    idToken:token,
-    audience:process.env.GOOGLE_CLIENT_ID
+    idToken: token,
+    audience: process.env.GOOGLE_CLIENT_ID,
   });
 
   const payload = ticket.getPayload();
 
-  let user = await authModel.findOne({email:payload.email})
+  let user = await authModel.findOne({ email: payload.email });
 
-  if(!user){
+  if (!user) {
     user = await authModel.create({
-      username:payload.name,
-      email:payload.email,
-      password:null,
-      googleId:payload.sub,
-      avatar:payload.picture,
-      provider:"google"
+      username: payload.name,
+      email: payload.email,
+      password: null,
+      googleId: payload.sub,
+      avatar: payload.picture,
+      provider: "google",
     });
   }
 
   const jwt_token = jwt.sign(
-      {
-        id: user._id,
-        username: user.username,
-      },
-      process.env.SECRET_KEY,
-    );
+    {
+      id: user._id,
+      username: user.username,
+    },
+    process.env.SECRET_KEY,
+  );
 
-    res.cookie("token", jwt_token);
+  res.cookie("token", jwt_token);
 
-    res.status(201).json({
-      msg: "Login is successfully",
-      success: true,
-    });
-
+  res.status(201).json({
+    msg: "Login is successfully",
+    success: true,
+  });
 }
 
-module.exports = { regUser, loginUser, logoutUser, getMe,googleLogin };
+module.exports = { regUser, loginUser, logoutUser, getMe, googleLogin };
