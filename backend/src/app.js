@@ -15,6 +15,7 @@ app.use(cors({
         "http://localhost:5173",
         "http://localhost:5174",
         "https://codewithsonu678.github.io",
+        "https://ai-interview-pro-iota.vercel.app",
     ],
     credentials:true
 }))
