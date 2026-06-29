@@ -5,14 +5,13 @@ import Loader from "./Loader/Loader";
 
 const Protected = ({children})=>{
 
-    const {loading,user} = useAuth();
-
-    if(loading){
-        return <Loader />;
+    const {authLoading,user} = useAuth();
+    if (authLoading) {
+        return null;
     }
 
     if(!user){
-        return <Navigate to={'/login'}/>
+        return <Navigate to={'/login'} replace />
 
     }
 

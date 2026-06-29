@@ -10,11 +10,13 @@ export const useInterview = () => {
     if (!content) {
         throw new Error("useInterview must be used within an InterviewProvider")
     }
-    const { report, setReport, reports, setReports, loading, setLoading } = content;
+    const { report, setReport, reports, setReports, loading, setLoading,loadingMessage,setLoadingMessage } = content;
     const { interviewId } = useParams();
 
     const generateInterviewReport = async ({ selfDescription, jobDescription, resumeFile }) => {
         setLoading(true)
+        setLoadingMessage("Generating your interview plan...")
+
         try {
             const data = await generateInterviewReportApi({ selfDescription, jobDescription, resumeFile });
 
@@ -43,7 +45,10 @@ export const useInterview = () => {
         setLoading(true)
         try {
             const data = await allInterviewReportsApi();
-            setReports(data.interviewReports || [])
+            if(data?.interviewReports){
+
+                setReports(data.interviewReports || [])
+            }
         } catch (error) {
             toast.error(
                 error?.response?.data?.msg ||
@@ -81,6 +86,7 @@ export const useInterview = () => {
 
     const generateResumePdf = async (interviewId) => {
         setLoading(true)
+        setLoadingMessage("Download your resume...")
         try {
             const response = await generateResumePdfApi(interviewId);
 
@@ -113,6 +119,7 @@ export const useInterview = () => {
             console.error(error);
         } finally {
             setLoading(false)
+            setLoadingMessage("Please wait....")
         }
     }
 
@@ -124,5 +131,5 @@ export const useInterview = () => {
         }
     }, [interviewId])
 
-    return { report, reports, loading, generateInterviewReport, allInterviewReports, interviewReportById, generateResumePdf }
+    return { report, reports, loading,loadingMessage, generateInterviewReport, allInterviewReports, interviewReportById, generateResumePdf }
 }

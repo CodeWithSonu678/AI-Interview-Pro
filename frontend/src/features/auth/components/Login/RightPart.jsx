@@ -2,11 +2,11 @@ import React, { useState } from 'react'
 import { useNavigate, Link } from 'react-router';
 import { GoogleLogin } from '@react-oauth/google'
 
-const RightPart = ({ t, loginHandle, googleLoginHandle }) => {
+const RightPart = ({ t, loginHandle, googleLoginHandle, errMsg, setErrMsg }) => {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [errMsg, setErrMsg] = useState("");
+
     const Navigate = useNavigate();
 
     const handleSubmit = async (e) => {
@@ -14,8 +14,7 @@ const RightPart = ({ t, loginHandle, googleLoginHandle }) => {
         try {
             const data = await loginHandle(email, password)
 
-            setErrMsg(data.msg || "Failed Login");
-            console.log(errMsg)
+            setErrMsg(data.msg || "Login Successful");
 
             setTimeout(() => {
                 setErrMsg("");
@@ -23,7 +22,6 @@ const RightPart = ({ t, loginHandle, googleLoginHandle }) => {
             }, 2000)
 
         } catch (error) {
-            setErrMsg(error.message || "Login Failed");
 
             setTimeout(() => {
                 setErrMsg("");
@@ -61,10 +59,22 @@ const RightPart = ({ t, loginHandle, googleLoginHandle }) => {
                 <button className='button primary-button'>{t("auth.loginBtn")}</button>
 
                 <GoogleLogin
-                    onSuccess={(response) => {
-                        const res = googleLoginHandle(response.credential);
-                    }
-                    } />
+                    onSuccess={async (response) => {
+                        try {
+                            await googleLoginHandle(response.credential);
+                        } catch (error) {
+                            errMsg(error)
+                            toast.error(
+                                error?.response?.data?.msg ||
+                                "Google login failed"
+                            );
+                        }
+                    }}
+                    onError={() => {
+                        console.error("Google Login Failed");
+                        toast.error("Google Sign-In failed. Please try again.");
+                    }}
+                />
 
             </form>
             <p>{t("auth.dontHaveAccount")} <Link to='/register'>{t("auth.registerLink")}</Link></p>

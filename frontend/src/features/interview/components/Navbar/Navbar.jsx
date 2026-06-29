@@ -4,6 +4,8 @@ import { Sun, Menu, X } from 'lucide-react';
 import '../../styles/Navbar/Navbar.scss';
 import { InterviewThemeContext } from '../../interview.theme.context.jsx';
 import { useTranslation } from 'react-i18next';
+import { AuthContext } from '../../../auth/auth.context.jsx';
+import { useAuth } from '../../../auth/hooks/useAuth.jsx';
 
 const Navbar = () => {
 
@@ -14,6 +16,8 @@ const Navbar = () => {
     if (!context) return null;
 
     const { isOpenTheme, setIsOpenTheme } = context;
+
+    const  { user ,logoutHandle}  = useAuth();
 
     const { t } = useTranslation();
 
@@ -45,9 +49,8 @@ const Navbar = () => {
             {/* Nav Links */}
 
             <div
-                className={`nav-links ${
-                    isMenuOpen ? "active" : ""
-                }`}
+                className={`nav-links ${isMenuOpen ? "active" : ""
+                    }`}
             >
 
                 <Link
@@ -94,13 +97,28 @@ const Navbar = () => {
                     <Sun size={21} />
                 </button>
 
-                <Link
-                    to="/login"
-                    className="sign-btn"
-                    onClick={() => setIsMenuOpen(false)}
-                >
-                    {t("nav.signIn")}
-                </Link>
+                {
+                    user ? (
+                        <button
+                            className="sign-btn"
+                            onClick={async() => {
+                                await logoutHandle();
+                                setIsMenuOpen(false)
+                            }}
+                        >
+                            {t("nav.logout")}
+                        </button>
+                    ) : (
+                        <Link
+                            to="/login"
+                            className="sign-btn"
+                            onClick={() => setIsMenuOpen(false)}
+                        >
+                            {t("nav.signIn")}
+                        </Link>
+                    )
+                }
+
 
             </div>
 

@@ -27,7 +27,6 @@ const Home = () => {
   return (
     <main className='home'>
 
-      <Loader />
 
       <div className="main-content">
         <HeroSection />

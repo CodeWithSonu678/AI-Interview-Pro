@@ -24,7 +24,7 @@ const CenterPart = ({ activeNav,report }) => {
             <div className="questions-sections">
               {report.technicalQuestions.map((q,i) => {
                 return (
-                  <div className='q-container'>
+                  <div className='q-container' key={i}>
                     <div className="question" onClick={() => {
                       setOpenId((openId === i) ? null : i)
                       setIsOpen(!isOpen)

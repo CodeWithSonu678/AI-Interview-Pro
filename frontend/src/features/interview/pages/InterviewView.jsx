@@ -21,10 +21,8 @@ const InterviewView = () => {
 
 
 
-    if (loading || !report) {
-        return (
-            <Loader/>
-        )
+    if (!report) {
+        return null;
     }
 
     const scoreColor =

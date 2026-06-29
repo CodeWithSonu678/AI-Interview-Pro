@@ -1,24 +1,35 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect,useState } from "react";
 import { AuthContext } from "../auth.context.jsx";
 import { login, register, logout, getMe, googleLogin } from '../services/auth.api.js';
 import { useNavigate } from 'react-router'
 import toast from "react-hot-toast";
+import { InterviewContent } from "../../interview/interview.content.jsx";
 
 export const useAuth = () => {
 
     const content = useContext(AuthContext);
-    const { user, setUser, loading, setLoading } = content;
+    const { user, setUser,authLoading } = content;
+    const { loading, setLoading,loadingMessage, setLoadingMessage } = useContext(InterviewContent);
     const Navigate = useNavigate();
+
+    const [errMsg, setErrMsg] = useState("");
 
 
     const registerHandle = async (username, email, password) => {
         setLoading(true)
+        setLoadingMessage("Creating your account...");
         try {
             const data = await register(username, email, password)
 
             setUser(data)
             return data;
         } catch (error) {
+            setErrMsg(error)
+            toast.error(
+                error?.response?.data?.msg ||
+                "Failed Registration"
+            );
+
             throw error;
         } finally {
             setLoading(false)
@@ -27,6 +38,7 @@ export const useAuth = () => {
 
     const loginHandle = async (email, password) => {
         setLoading(true)
+        setLoadingMessage("Loading home page...")
         try {
             const data = await login(email, password)
 
@@ -39,6 +51,7 @@ export const useAuth = () => {
             setUser(data)
             return data;
         } catch (error) {
+            setErrMsg(error)
             toast.error(
                 error?.response?.data?.msg ||
                 "Failed Login"
@@ -51,10 +64,12 @@ export const useAuth = () => {
 
     const logoutHandle = async () => {
         setLoading(true)
+        setLoadingMessage("Signing you out...");
         try {
             const data = await logout()
 
-            setUser(data)
+            setUser(null)
+            Navigate('/login')
             return data;
         } catch (error) {
             throw error;
@@ -65,6 +80,7 @@ export const useAuth = () => {
 
     const googleLoginHandle = async (token) => {
         setLoading(true)
+        setLoadingMessage("Signing you in with Google...");
         try {
             const data = await googleLogin(token)
 
@@ -76,35 +92,21 @@ export const useAuth = () => {
             throw error;
         } finally {
             setLoading(false)
+            setLoadingMessage("Please wait...");
         }
     }
-
-
-
-    //jb component render hota hai toh yee ek bar chlega kyunki empty array diye hain. 
-    useEffect(() => {
-
-        const fetchData = async () => {
-            try {
-                const data = await getMe();
-                setUser(data.user)
-            } catch (error) {
-
-            } finally {
-                setLoading(false)
-            }
-        }
-
-        fetchData();
-
-    }, []);
 
     return {
         user,
         loading,
+        authLoading,
         registerHandle,
         loginHandle,
         logoutHandle,
-        googleLoginHandle
+        googleLoginHandle,
+        setLoadingMessage,
+        loadingMessage,
+        errMsg,
+        setErrMsg
     };
 }
