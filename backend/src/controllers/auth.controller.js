@@ -94,7 +94,12 @@ async function loginUser(req, res) {
       process.env.SECRET_KEY,
     );
 
-    res.cookie("token", token);
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: true, // HTTPS ke liye
+      sameSite: "none", // Vercel ↔ Render cross-origin
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+    });
 
     res.status(201).json({
       msg: "Login is successfully",
