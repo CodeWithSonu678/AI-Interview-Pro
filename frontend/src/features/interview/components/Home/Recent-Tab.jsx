@@ -1,4 +1,4 @@
-import React,{useState} from 'react'
+import React, { useState } from 'react'
 import { useNavigate } from 'react-router'
 import '../../styles/Home/RecentTab.scss';
 import { useTranslation } from 'react-i18next'
@@ -23,8 +23,11 @@ const RecentTab = ({ reports }) => {
             <h2>{t("home.recentPlans.title")}</h2>
 
             <div className="reports-details">
-                <p>{capitalize(user.userPlan)} • Reports Used: {user.reportsUsed} / {user.reportLimit}</p>
-                <button className='recent-vl-btn' onClick={()=> setShowAll(!showAll)}> {showAll === false ? "View All" : "View Less"}</button>
+                <p>
+                    {capitalize(user?.userPlan || "Free")} • Reports Used:{" "}
+                    {user?.reportsUsed ?? 0} / {user?.reportLimit ?? 1}
+                </p>
+                <button className='recent-vl-btn' onClick={() => setShowAll(!showAll)}> {showAll === false ? "View All" : "View Less"}</button>
             </div>
 
             <div className="recent-container">

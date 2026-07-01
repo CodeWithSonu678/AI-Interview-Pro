@@ -5,6 +5,8 @@ import RecentTab from '../components/Home/Recent-Tab';
 import { useInterview } from '../Hooks/useInterview';
 import { useNavigate } from 'react-router'
 import Loader from '../../auth/components/Loader/Loader.jsx'
+import { useAuth } from '../../auth/hooks/useAuth.jsx';
+import toast from 'react-hot-toast';
 
 const Home = () => {
 
@@ -14,10 +16,20 @@ const Home = () => {
   const [jobDescription, setJobDescription] = useState("");
   const [resume, setResume] = useState(null);
 
+  const { user } = useAuth()
+
   const navigate = useNavigate();
 
   //handle generate btn
   const handleGenerateReport = async () => {
+
+    if (!user) {
+      toast.error("Please login to generate an interview report.");
+
+      navigate("/login");
+
+      return;
+    }
     const resumeFile = resumeInputRef.current.files[0]
     const data = await generateInterviewReport({ jobDescription, selfDescription, resumeFile });
 
