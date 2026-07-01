@@ -22,6 +22,7 @@ export const generateInterviewReportApi =async ({selfDescription,jobDescription,
         return response.data
     } catch (error) {
         console.log(error)
+        throw error;
     }
 }
 
@@ -31,6 +32,7 @@ export const allInterviewReportsApi = async()=>{
         return response.data
     } catch (error) {
         console.log(error)
+        throw error;
     }
 }
 
@@ -40,6 +42,7 @@ export const interviewReportByIdApi = async(interviewId)=>{
         return response.data
     } catch (error) {
         console.log(error)
+        throw error;
     }
 }
 
@@ -51,5 +54,6 @@ export const generateResumePdfApi = async(interviewId)=>{
         return response.data
     } catch (error) {
         console.log(error)
+        throw error;
     }
 }

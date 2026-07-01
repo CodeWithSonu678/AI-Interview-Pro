@@ -16,6 +16,7 @@ export const AuthProvider = ({ children }) => {
 
         const data = await getMe();
         setUser(data.user)
+        
       } catch (error) {
         setUser(null);
       }finally{

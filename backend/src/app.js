@@ -4,6 +4,7 @@ const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const authRouter = require('./routes/auth.route');
 const interviewRouter = require('./routes/interview.route');
+const razorpayRouter = require('./routes/razorpay.route')
 
 const app = express();
 
@@ -25,5 +26,6 @@ app.use(cors({
 
 app.use("/api/auth",authRouter);
 app.use("/api/interview",interviewRouter);
+app.use("/api/payment",razorpayRouter);
 
 module.exports = app;

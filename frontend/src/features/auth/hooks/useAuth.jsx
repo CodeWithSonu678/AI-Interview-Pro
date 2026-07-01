@@ -21,7 +21,9 @@ export const useAuth = () => {
         try {
             const data = await register(username, email, password)
 
-            setUser(data)
+            const me = await getMe();
+            setUser(me.user)
+
             return data;
         } catch (error) {
             const message =
@@ -50,8 +52,11 @@ export const useAuth = () => {
             }
 
             //success
-            setUser(data)
+            const me = await getMe();
+            setUser(me.user)
+            
             return data;
+            
         } catch (error) {
             const message =
                 error?.response?.data?.msg ||

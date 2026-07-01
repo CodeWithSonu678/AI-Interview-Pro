@@ -4,6 +4,8 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const { OAuth2Client } = require("google-auth-library");
 
+//register controller
+
 async function regUser(req, res) {
   const { username, email, password } = req.body;
 
@@ -42,20 +44,31 @@ async function regUser(req, res) {
       process.env.SECRET_KEY,
     );
 
-    res.cookie("token", token);
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: true, // HTTPS ke liye
+      sameSite: "none", // Vercel ↔ Render cross-origin
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+    });
 
     res.status(201).json({
       msg: "Registration is successfully",
       success: true,
     });
+
   } catch (error) {
     console.log(error.message);
+
     res.status(401).json({
       msg: "Unauthorized Access denied!",
       success: false,
     });
+
   }
 }
+
+
+//Login controller
 
 async function loginUser(req, res) {
   const { email, password } = req.body;
@@ -105,6 +118,7 @@ async function loginUser(req, res) {
       msg: "Login is successfully",
       success: true,
     });
+
   } catch (error) {
     console.log(error.message);
     res.status(401).json({
@@ -148,8 +162,12 @@ async function getMe(req, res) {
         id: info._id,
         username: info.username,
         email: info.email,
+        userPlan: info.userPlan,
+        reportsUsed: info.reportsUsed,
+        reportLimit:info.reportLimit
       },
     });
+
   } catch (error) {
     console.log(error.message);
     res.status(401).json({

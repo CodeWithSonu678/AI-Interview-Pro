@@ -2,8 +2,9 @@ const { GoogleGenAI } = require("@google/genai");
 const { z } = require("zod");
 const { zodToJsonSchema } = require("zod-to-json-schema");
 const puppeteer = require("puppeteer");
+const  planConfig = require("./planConfig");
 
-// for validate by zod to kaise data hona chaiye ai ka 
+// for validate by zod to kaise data hona chaiye ai ka
 const interviewReportSchema = z.object({
   matchScore: z
     .number()
@@ -90,7 +91,7 @@ const interviewReportSchema = z.object({
     ),
 });
 
-//yah btata h ki ai ko kis format min data dena hai 
+//yah btata h ki ai ko kis format min data dena hai
 const responseSchema = {
   type: "object",
 
@@ -179,84 +180,178 @@ async function generateInterviewReport({
   selfDescription,
   resume,
   jobDescription,
+  userPlan
 }) {
-  const prompt = `
-You are an AI interview assistant.
 
-Return ONLY valid JSON.
+  const config = planConfig[userPlan] || planConfig.free;
 
-Do not add markdown.
-Do not add explanation.
+//   const prompt = `
+//     You are an AI interview assistant.
 
-IMPORTANT:
-All arrays must contain proper JSON objects.
+//     Return ONLY valid JSON.
 
-Do NOT flatten object properties into arrays of strings.
+//     Do not add markdown.
+//     Do not add explanation.
 
-The response MUST be valid JSON.
+//     IMPORTANT:
+//     All arrays must contain proper JSON objects.
 
-IMPORTANT RULES:
+//     Do NOT flatten object properties into arrays of strings.
 
-1. Arrays must contain ONLY JSON objects.
-2. Do NOT flatten object properties into arrays.
-3. technicalQuestions must be an array of objects.
-4. behavioralQuestions must be an array of objects.
-5. skillGaps must be an array of objects.
-6. preparationPlan must be an array of objects.
-7. Never return arrays of strings like:
-   ["question","answer"]
+//     The response MUST be valid JSON.
 
-Correct format example:
+//     IMPORTANT RULES:
 
-{
-  "matchScore": 90,
+//     1. Arrays must contain ONLY JSON objects.
+//     2. Do NOT flatten object properties into arrays.
+//     3. technicalQuestions must be an array of objects.
+//     4. behavioralQuestions must be an array of objects.
+//     5. skillGaps must be an array of objects.
+//     6. preparationPlan must be an array of objects.
+//     7. Never return arrays of strings like:
+//       ["question","answer"]
 
-  "technicalQuestions": [
+//     Correct format example:
+
+//     {
+//       "matchScore": 90,
+
+//       "technicalQuestions": [
+//         {
+//           "question": "Explain React hooks",
+//           "intention": "Check React knowledge",
+//           "answer": "Explain useState and useEffect"
+//         }
+//       ],
+
+//       "behavioralQuestions": [
+//         {
+//           "question": "Tell me about a challenge",
+//           "intention": "Check problem solving",
+//           "answer": "Use STAR method"
+//         }
+//       ],
+
+//       "skillGaps": [
+//         {
+//           "skill": "Redux",
+//           "severity": "medium"
+//         }
+//       ],
+
+//       "preparationPlan": [
+//         {
+//           "day": 1,
+//           "focus": "React",
+//           "tasks": [
+//             "Learn hooks",
+//             "Build mini project"
+//           ]
+//         }
+//       ],
+
+//       "title": "Frontend Developer Intern"
+//     }
+
+//     Resume:
+//     ${resume}
+
+//     Self Description:
+//     ${selfDescription}
+
+//     Job Description:
+//     ${jobDescription}
+// `;
+
+
+const prompt = `
+    You are an AI interview assistant.
+
+    Return ONLY valid JSON.
+
+    Do not add markdown.
+    Do not add explanation.
+
+    IMPORTANT:
+    All arrays must contain proper JSON objects.
+
+    Do NOT flatten object properties into arrays of strings.
+
+    The response MUST be valid JSON.
+
+    Generate the report according to the user's "${userPlan}" plan.
+
+    PLAN REQUIREMENTS:
+
+    - Generate EXACTLY ${config.technicalQuestions} technical interview questions.
+    - Generate EXACTLY ${config.behavioralQuestions} behavioral interview questions.
+    - Generate a preparation roadmap of EXACTLY ${config.roadmapDays} days.
+    - Provide a ${config.skillGap} skill gap analysis.
+
+    IMPORTANT RULES:
+
+    1. Arrays must contain ONLY JSON objects.
+    2. Do NOT flatten object properties into arrays.
+    3. technicalQuestions must contain EXACTLY ${config.technicalQuestions} objects.
+    4. behavioralQuestions must contain EXACTLY ${config.behavioralQuestions} objects.
+    5. skillGaps must be an array of objects.
+    6. preparationPlan must contain EXACTLY ${config.roadmapDays} objects.
+    7. Never return arrays of strings like:
+      ["question","answer"]
+    8. Match score must be between 0 and 100.
+    9. The response must strictly follow the JSON format below.
+
+    Correct format example:
+
     {
-      "question": "Explain React hooks",
-      "intention": "Check React knowledge",
-      "answer": "Explain useState and useEffect"
+      "matchScore": 90,
+
+      "technicalQuestions": [
+        {
+          "question": "Explain React hooks",
+          "intention": "Check React knowledge",
+          "answer": "Explain useState and useEffect"
+        }
+      ],
+
+      "behavioralQuestions": [
+        {
+          "question": "Tell me about a challenge",
+          "intention": "Check problem solving",
+          "answer": "Use STAR method"
+        }
+      ],
+
+      "skillGaps": [
+        {
+          "skill": "Redux",
+          "severity": "medium"
+        }
+      ],
+
+      "preparationPlan": [
+        {
+          "day": 1,
+          "focus": "React",
+          "tasks": [
+            "Learn hooks",
+            "Build mini project"
+          ]
+        }
+      ],
+
+      "title": "Frontend Developer Intern"
     }
-  ],
 
-  "behavioralQuestions": [
-    {
-      "question": "Tell me about a challenge",
-      "intention": "Check problem solving",
-      "answer": "Use STAR method"
-    }
-  ],
+    Resume:
+    ${resume}
 
-  "skillGaps": [
-    {
-      "skill": "Redux",
-      "severity": "medium"
-    }
-  ],
+    Self Description:
+    ${selfDescription}
 
-  "preparationPlan": [
-    {
-      "day": 1,
-      "focus": "React",
-      "tasks": [
-        "Learn hooks",
-        "Build mini project"
-      ]
-    }
-  ],
-
-  "title": "Frontend Developer Intern"
-}
-
-Resume:
-${resume}
-
-Self Description:
-${selfDescription}
-
-Job Description:
-${jobDescription}
-`;
+    Job Description:
+    ${jobDescription}
+    `;
 
   try {
     const response = await api.models.generateContent({
@@ -277,7 +372,7 @@ ${jobDescription}
     }
 
     if (error?.status === 503) {
-        throw new Error("AI_SERVER_BUSY");
+      throw new Error("AI_SERVER_BUSY");
     }
 
     console.error("Gemini Error:", error);
@@ -286,32 +381,36 @@ ${jobDescription}
   }
 }
 
-async function generateResumePdfFormat(htmlContent){
+async function generateResumePdfFormat(htmlContent) {
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
-  await page.setContent(htmlContent, { waitUntil: "networkidle0" })
+  await page.setContent(htmlContent, { waitUntil: "networkidle0" });
 
-    const pdfBuffer = await page.pdf({
-        format: "A4", margin: {
-            top: "20mm",
-            bottom: "20mm",
-            left: "15mm",
-            right: "15mm"
-        }
-    })
+  const pdfBuffer = await page.pdf({
+    format: "A4",
+    margin: {
+      top: "20mm",
+      bottom: "20mm",
+      left: "15mm",
+      right: "15mm",
+    },
+  });
 
-    await browser.close()
+  await browser.close();
 
-    return pdfBuffer
+  return pdfBuffer;
 }
 
 async function generateResumePdf({ resume, selfDescription, jobDescription }) {
+  const resumePdfSchema = z.object({
+    html: z
+      .string()
+      .describe(
+        "The HTML content of the resume which can be converted to PDF using any library like puppeteer",
+      ),
+  });
 
-    const resumePdfSchema = z.object({
-        html: z.string().describe("The HTML content of the resume which can be converted to PDF using any library like puppeteer")
-    })
-
-    const prompt = `Generate resume for a candidate with the following details:
+  const prompt = `Generate resume for a candidate with the following details:
                         Resume: ${resume}
                         Self Description: ${selfDescription}
                         Job Description: ${jobDescription}
@@ -322,24 +421,22 @@ async function generateResumePdf({ resume, selfDescription, jobDescription }) {
                         you can highlight the content using some colors or different font styles but the overall design should be simple and professional.
                         The content should be ATS friendly, i.e. it should be easily parsable by ATS systems without losing important information.
                         The resume should not be so lengthy, it should ideally be 1-2 pages long when converted to PDF. Focus on quality rather than quantity and make sure to include all the relevant information that can increase the candidate's chances of getting an interview call for the given job description.
-                    `
+                    `;
 
-    const response = await api.models.generateContent({
-        model: "gemini-3-flash-preview",
-        contents: prompt,
-        config: {
-            responseMimeType: "application/json",
-            responseSchema: zodToJsonSchema(resumePdfSchema),
-        }
-    })
+  const response = await api.models.generateContent({
+    model: "gemini-3-flash-preview",
+    contents: prompt,
+    config: {
+      responseMimeType: "application/json",
+      responseSchema: zodToJsonSchema(resumePdfSchema),
+    },
+  });
 
+  const jsonContent = JSON.parse(response.text);
 
-    const jsonContent = JSON.parse(response.text)
+  const pdfBuffer = await generateResumePdfFormat(jsonContent.html);
 
-    const pdfBuffer = await generateResumePdfFormat(jsonContent.html)
-
-    return pdfBuffer
-
+  return pdfBuffer;
 }
 
-module.exports = {generateInterviewReport,generateResumePdf};
+module.exports = { generateInterviewReport, generateResumePdf };

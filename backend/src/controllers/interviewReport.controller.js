@@ -1,5 +1,7 @@
 const pdfParse = require("pdf-parse");
 const interviewReportModel = require("../models/interviewReport.model");
+const authModel = require("../models/auth.model")
+const planConfig = require("../services/planConfig")
 const {
   generateInterviewReport,
   generateResumePdf,
@@ -11,6 +13,8 @@ async function generateInterviewReportController(req, res) {
     const { jobDescription, selfDescription } = req.body;
 
     let resumeContent = "";
+
+    // all data recevied by user
 
     if (req.file) {
       resumeContent = await new pdfParse.PDFParse(
@@ -27,10 +31,34 @@ async function generateInterviewReportController(req, res) {
       });
     }
 
+    //check user h or not 
+
+    const user = await authModel.findById(req.user.id);
+
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found",
+      });
+    }
+
+    // check generate limit full or not
+
+    const plan = planConfig[user.userPlan] || planConfig.free;
+
+    if(user.reportsUsed >= plan.reports){
+        return res.status(403).json({
+            success:false,
+            message:"Your monthly report limit has been reached.",
+            plan: user.userPlan,
+        })
+    }
+
     const interviewReportByAi = await generateInterviewReport({
       selfDescription,
-      resumeContent,
+      resume:resumeContent.text,
       jobDescription,
+      userPlan:user.userPlan
     });
 
     if (!interviewReportByAi) {
@@ -48,6 +76,9 @@ async function generateInterviewReportController(req, res) {
       user: req.user.id,
     });
 
+    user.reportsUsed += 1;
+    await user.save();
+
     res.status(201).json({
       success: true,
       msg: "Interview report generated successfully",
@@ -63,12 +94,13 @@ async function generateInterviewReportController(req, res) {
         });
     }
 
+    console.error("Generate Report Error:", error);
+
     return res.status(500).json({
         success: false,
         message: error.message || "Internal Server Error"
     });
 
-    console.error("Generate Report Error:", error);
 
   }
 }
@@ -119,6 +151,7 @@ async function allInterviewReportsController(req, res) {
       msg: "All Interview Reports fetched successfully",
       interviewReports,
     });
+    
   } catch (error) {
     console.log(error.message);
     res.status(404).json({

@@ -110,43 +110,52 @@
 },
 
 "pricing": {
-    "title": "Simple, Transparent Pricing",
-    "subtitle": "Choose the plan that's right for you.",
+  "title": "Simple, Transparent Pricing",
+  "subtitle": "Choose the perfect plan for your interview preparation.",
 
-    "mostPopular": "Most Popular",
+  "mostPopular": "Most Popular",
 
-    "free": {
-      "title": "Free Plan",
-      "subtitle": "For beginners",
-      "button": "Get Started",
+  "free": {
+    "title": "Free Plan",
+    "subtitle": "Perfect for getting started",
+    "button": "Get Started",
 
-      "feature1": "1 Interview Report",
-      "feature2": "Basic Questions",
-      "feature3": "Limited Features"
-    },
+    "feature1": "1 AI Interview Report",
+    "feature2": "5 Interview Questions",
+    "feature3": "4-Day Learning Roadmap",
+    "feature4": "Basic AI Analysis",
+    "feature5": "Basic Behavioral Questions",
+    "feature6": "Email Support"
+  },
 
-    "pro": {
-      "title": "Pro Plan",
-      "subtitle": "For serious learners",
-      "button": "Upgrade Now",
+  "pro": {
+    "title": "Pro Plan",
+    "subtitle": "Best for active learners",
+    "button": "Upgrade to Pro",
 
-      "feature1": "Unlimited Reports",
-      "feature2": "Advanced AI Analysis",
-      "feature3": "Skill Gap & Plan",
-      "feature4": "Priority Support"
-    },
+    "feature1": "10 AI Interview Reports",
+    "feature2": "15 Interview Questions",
+    "feature3": "25-Day Learning Roadmap",
+    "feature4": "Detailed Skill Gap Analysis",
+    "feature5": "Behavioral Interview Questions",
+    "feature6": "Priority Email Support"
+  },
 
-    "premium": {
-      "title": "Premium Plan",
-      "subtitle": "For professionals",
-      "button": "Upgrade Now",
+  "premium": {
+    "title": "Premium Plan",
+    "subtitle": "For professionals & job seekers",
+    "button": "Go Premium",
 
-      "feature1": "Everything in Pro",
-      "feature2": "Resume Optimization",
-      "feature3": "Mock Interviews",
-      "feature4": "Dedicated Support",
-      "feature5": "Career Guidance"
-    }
+    "feature1": "30 AI Interview Reports",
+    "feature2": "30+ Interview Questions",
+    "feature3": "60-Day Learning Roadmap",
+    "feature4": "ATS Resume Review",
+    "feature5": "Resume Improvement Suggestions",
+    "feature6": "Behavioral + HR + Technical Questions",
+    "feature7": "Personalized Career Guidance",
+    "feature8": "Priority AI Generation",
+    "feature9": "Premium Support"
+  }
 },
 
 

@@ -1,18 +1,59 @@
 import React from 'react'
-import { Check } from 'lucide-react'
+import { Check, Currency } from 'lucide-react'
 import '../../styles/Pricing/PricingContainer.scss'
 import { pricingPlans } from '../../Data/PricingData'
-import {useTranslation} from 'react-i18next'
+import { useTranslation } from 'react-i18next'
+import { useNavigate } from 'react-router'
+import { createOrder } from '../../services/payment.api'
 
 const PricingContainer = () => {
-    const {t} = useTranslation();
+    const { t } = useTranslation();
+
+    const navigate = useNavigate()
+
+    //payment handler code here 
+    const handlePayment = async (plan) => {
+
+        if (plan === 'free') {
+            navigate('/')
+            return;
+        }
+
+        const { order } = await createOrder(plan);
+
+        const options = {
+            key: import.meta.env.VITE_RAZORPAY_KEY,
+
+            amount: order.amount,
+
+            currency: order.currency,
+
+            name: "AI Interview Pro",
+
+            description: `${plan} Plan`,
+
+            order_id: order.id,
+
+            handler: function (response) {
+
+                console.log(response);
+
+            }
+        }
+
+        const razorpay = new window.Razorpay(options);
+
+        razorpay.open();
+    }
+
+
     return (
         <div className='pricing-container'>
 
             {pricingPlans.map((plan) => (
                 <div className={`card ${plan.type}`} key={plan.id}>
 
-                    { plan.isPopular && (
+                    {plan.isPopular && (
                         <span className='badge'>{t("pricing.mostPopular")}</span>
                     )}
 
@@ -31,7 +72,7 @@ const PricingContainer = () => {
                         </p>
                     ))}
 
-                    <button>{t(plan.button)}</button>
+                    <button onClick={() => handlePayment(plan.type)} > {t(plan.button)}</button>
                 </div>
             ))}
 

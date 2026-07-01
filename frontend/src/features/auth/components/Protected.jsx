@@ -6,6 +6,7 @@ import Loader from "./Loader/Loader";
 const Protected = ({children})=>{
 
     const {authLoading,user} = useAuth();
+
     if (authLoading) {
         return null;
     }

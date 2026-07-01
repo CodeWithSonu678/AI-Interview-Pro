@@ -18,7 +18,7 @@ const authSchema = new mongoose.Schema({
 
     googleId:{
         type:String,
-        required:true
+        default: null
     },
 
     avatar:{
@@ -29,7 +29,33 @@ const authSchema = new mongoose.Schema({
         type: String,
         enum: ["local", "google"],
         default: "local"
-    }
+    },
+
+    userPlan:{
+        type: String,
+        enum: ["free", "pro","premium"],
+        default: "free"
+    },
+
+    reportLimit: {
+    type: Number,
+    default: 1,
+  },
+
+  reportsUsed: {
+    type: Number,
+    default: 0,
+  },
+
+  subscriptionStatus: {
+    type: String,
+    enum: ["active", "expired"],
+    default: "active",
+  },
+
+  planExpiresAt: {
+    type: Date,
+  },
 
 },{timestamps:true});
 

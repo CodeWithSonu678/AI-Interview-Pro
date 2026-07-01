@@ -24,6 +24,21 @@ export const useInterview = () => {
             toast.success("Interview report generated successfully");
             return data.interviewReport;
         } catch (error) {
+            console.log(error)
+
+            // Report Limit
+            if (error?.response?.status === 403) {
+                const plan = error.response.data.plan;
+
+                toast.error(
+                    `You have reached your ${plan} plan limit. Upgrade your plan to generate more reports.`
+                );
+
+                return null;
+            }
+
+            // AI Busy 
+
             if (error?.response?.status === 503) {
                 toast.error(
                     "AI server is busy right now. Please try again later."
@@ -49,6 +64,7 @@ export const useInterview = () => {
 
                 setReports(data.interviewReports || [])
             }
+            
         } catch (error) {
             toast.error(
                 error?.response?.data?.msg ||
