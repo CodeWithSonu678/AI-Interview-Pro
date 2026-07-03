@@ -21,7 +21,7 @@ export const createOrder = async(plan)=>{
     }
 }
 
-//verify payemnt 
+//verify payment 
 
 export const verifyPaymentApi = async(razorpay_order_id, razorpay_payment_id, razorpay_signature, plan)=>{
     try {
