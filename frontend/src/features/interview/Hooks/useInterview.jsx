@@ -3,6 +3,7 @@ import { generateInterviewReportApi, allInterviewReportsApi, interviewReportById
 import { InterviewContent } from '../interview.content';
 import { useParams } from 'react-router'
 import toast from 'react-hot-toast';
+import { useAuth } from '../../auth/hooks/useAuth';
 
 export const useInterview = () => {
     const content = useContext(InterviewContent);
@@ -12,6 +13,8 @@ export const useInterview = () => {
     }
     const { report, setReport, reports, setReports, loading, setLoading,loadingMessage,setLoadingMessage } = content;
     const { interviewId } = useParams();
+
+    // const {user} = useAuth();
 
     const generateInterviewReport = async ({ selfDescription, jobDescription, resumeFile }) => {
         setLoading(true)
@@ -139,7 +142,9 @@ export const useInterview = () => {
         }
     }
 
+    const token = localStorage.getItem("token");
     useEffect(() => {
+
         if (interviewId) {
             interviewReportById(interviewId)
         } else {

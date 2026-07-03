@@ -1,49 +1,92 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Check, Currency } from 'lucide-react'
 import '../../styles/Pricing/PricingContainer.scss'
 import { pricingPlans } from '../../Data/PricingData'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router'
-import { createOrder } from '../../services/payment.api'
+import { createOrder, verifyPaymentApi } from '../../services/payment.api'
+import toast from 'react-hot-toast'
+import { getMe } from '../../../auth/services/auth.api'
+import { AuthContext } from '../../../auth/auth.context'
 
 const PricingContainer = () => {
     const { t } = useTranslation();
 
     const navigate = useNavigate()
 
+    const { setUser } = useContext(AuthContext);
+
     //payment handler code here 
     const handlePayment = async (plan) => {
 
-        if (plan === 'free') {
-            navigate('/')
-            return;
-        }
-
-        const { order } = await createOrder(plan);
-
-        const options = {
-            key: import.meta.env.VITE_RAZORPAY_KEY,
-
-            amount: order.amount,
-
-            currency: order.currency,
-
-            name: "AI Interview Pro",
-
-            description: `${plan} Plan`,
-
-            order_id: order.id,
-
-            handler: function (response) {
-
-                console.log(response);
-
+        try {
+            if (plan === 'free') {
+                navigate('/')
+                return;
             }
+
+            const { order } = await createOrder(plan);
+
+            const options = {
+                key: import.meta.env.VITE_RAZORPAY_KEY,
+
+                amount: order.amount,
+
+                currency: order.currency,
+
+                name: "AI Interview Pro",
+
+                description: `${plan} Plan`,
+
+                order_id: order.id,
+
+                modal: {
+                    ondismiss: function () {
+                        toast("Payment cancelled");
+                    }
+                },
+
+                handler: async function (response) {
+
+                    try {
+                        const data = await verifyPaymentApi(response.razorpay_order_id, response.razorpay_payment_id, response.razorpay_signature, plan);
+
+                        if (!data.success) {
+                            toast.error(data.message);
+                            return;
+                        }
+
+                        setUser(data.user)
+
+                        toast.success("Plan upgraded successfully.");
+                        navigate("/");
+
+                    } catch (error) {
+                        toast.error("Payment verification failed.");
+
+                        console.log(error);
+                    }
+
+                }
+            }
+
+            const razorpay = new window.Razorpay(options);
+
+            razorpay.on("payment.failed", function (response) {
+
+                toast.error("Payment Failed");
+
+                console.log(response.error);
+
+            });
+
+            razorpay.open();
+        } catch (error) {
+            toast.error("Unable to start payment.");
+
+            console.log(error);
         }
 
-        const razorpay = new window.Razorpay(options);
-
-        razorpay.open();
     }
 
 

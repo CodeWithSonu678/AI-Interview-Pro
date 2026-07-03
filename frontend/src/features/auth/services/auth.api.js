@@ -37,7 +37,7 @@ export const logout = async()=>{
     }
 }
 
-export const getMe = async(email,password)=>{
+export const getMe = async()=>{
     try {
         const res = await api.get("/api/auth/get-me");
 

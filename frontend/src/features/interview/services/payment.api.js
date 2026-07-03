@@ -20,3 +20,17 @@ export const createOrder = async(plan)=>{
         throw error
     }
 }
+
+//verify payemnt 
+
+export const verifyPaymentApi = async(razorpay_order_id, razorpay_payment_id, razorpay_signature, plan)=>{
+    try {
+        const res = await api.post('/api/payment/verify-payment',{razorpay_order_id, razorpay_payment_id, razorpay_signature, plan});
+
+        return res.data;
+    } catch (error) {
+        console.log(error)
+
+        throw error
+    }
+}

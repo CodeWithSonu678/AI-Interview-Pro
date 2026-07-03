@@ -1,6 +1,6 @@
 const {Router} = require('express');
 const {isAlreadyReg} = require('../middlewares/isAlreadyReg.middleware');
-const {createOrderController} = require('../controllers/payment.controller')
+const {createOrderController,verifyPaymentController} = require('../controllers/payment.controller')
 
 const razorpayRouter = Router();
 
@@ -12,6 +12,14 @@ const razorpayRouter = Router();
  */
 
 razorpayRouter.post('/create-order',isAlreadyReg,createOrderController)
+
+/**
+ * @route POST /api/payment/verify-payment
+ * @description verify payment for secure payment
+ * @access private
+ */
+
+razorpayRouter.post('/verify-payment',isAlreadyReg,verifyPaymentController)
 
 
 module.exports = razorpayRouter;

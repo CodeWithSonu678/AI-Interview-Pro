@@ -44,7 +44,7 @@ const Home = () => {
         <HeroSection />
         <ContentPlan jobDescription={jobDescription} setJobDescription={setJobDescription} selfDescription={selfDescription} setSelfDescription={setSelfDescription} resume={resume} setResume={setResume} resumeInputRef={resumeInputRef} handleGenerateReport={handleGenerateReport} />
 
-        <RecentTab reports={reports} />
+        {user && <RecentTab reports={reports} />}
 
       </div>
     </main>
