@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../auth.context.jsx";
-import { login, register, logout, getMe, googleLogin } from '../services/auth.api.js';
+import { login, register,forgotPassword,resetPassword, logout, getMe, googleLogin } from '../services/auth.api.js';
 import { useNavigate } from 'react-router'
 import toast from "react-hot-toast";
 import { InterviewContent } from "../../interview/interview.content.jsx";
@@ -71,6 +71,60 @@ export const useAuth = () => {
         }
     }
 
+    const ForgotPasswordHandle = async (email) => {
+        setLoading(true)
+        setLoadingMessage("please wait...")
+        try {
+            const data = await forgotPassword(email)
+
+            //agar mail fail hua toh catch code chlao
+            if (!data.success) {
+                throw data.msg;
+            }
+            
+            return data;
+            
+        } catch (error) {
+            const message =
+                error?.response?.data?.message ||
+                error?.message ||
+                String(error);
+
+            setErrMsg(message);
+            toast.error(message);
+            throw new Error(message);
+        } finally {
+            setLoading(false)
+        }
+    }
+
+    const resetPasswordHandle = async (resetToken,newPassword) => {
+        setLoading(true)
+        setLoadingMessage("please wait...")
+        try {
+            const data = await resetPassword(resetToken,newPassword)
+
+            //agar reset fail hua toh catch code chlao
+            if (!data.success) {
+                throw data.msg;
+            }
+            
+            return data;
+            
+        } catch (error) {
+            const message =
+                error?.response?.data?.message ||
+                error?.message ||
+                String(error);
+
+            setErrMsg(message);
+            toast.error(message);
+            throw new Error(message);
+        } finally {
+            setLoading(false)
+        }
+    }
+
     const logoutHandle = async () => {
         setLoading(true)
         setLoadingMessage("Signing you out...");
@@ -111,6 +165,8 @@ export const useAuth = () => {
         authLoading,
         registerHandle,
         loginHandle,
+        ForgotPasswordHandle,
+        resetPasswordHandle,
         logoutHandle,
         googleLoginHandle,
         setLoadingMessage,

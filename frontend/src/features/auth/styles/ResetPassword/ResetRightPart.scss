@@ -1,0 +1,66 @@
+.reset-subTitle{
+    color: var(--muted-text);
+    font-size: clamp(.8rem,2vw,1.1rem);
+    text-align: center;
+    margin-top: -20px;
+}
+
+
+
+//instruction for strong password code here
+
+.instructionForPassword{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    border: 1px solid var(--text-color);
+    border-radius: .8rem;
+    gap: 10px;
+}
+
+.instructionForPassword h3{
+    font-size: clamp(1rem,2vw,1.2rem);
+    font-weight: 500;
+}
+
+.instructionForPassword .instruction-section{
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.instructionForPassword .instruction-section .instruction{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.instruction-section .instruction svg{
+    width: 15px;
+    height: 15px;
+    color: var(--muted-text);
+}
+
+.instruction-section .instruction p{
+    font-size: clamp(1rem,1vw,1.3rem);
+    color: var(--muted-text);
+}
+
+//footer 
+.footer-reset{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    gap: 10px;
+    justify-content: center;
+    color: var(--muted-text);
+    margin-top: -20px;
+}
+
+.footer-reset .icon-forgot{
+    color: var(--primary);
+}
+

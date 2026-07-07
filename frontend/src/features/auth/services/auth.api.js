@@ -27,6 +27,29 @@ export const login = async(email,password)=>{
     }
 }
 
+export const forgotPassword = async(email)=>{
+    try {
+        const res = await api.post("/api/auth/forgot-password",{email});
+
+        return res.data;
+    } catch (error) {
+        console.log(error)
+        throw error;
+    }
+}
+
+export const resetPassword = async(resetToken,newPassword)=>{
+    try {
+        
+        const res = await api.post(`/api/auth/reset-password/${resetToken}`,{newPassword});
+        
+        return res.data;
+    } catch (error) {
+        console.log(error)
+        throw error;
+    }
+}
+
 export const logout = async()=>{
     try {
         const res = await api.get("/api/auth/logout");

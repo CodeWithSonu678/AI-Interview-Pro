@@ -3,6 +3,8 @@ const BlackListModel = require("../models/blacklist.model");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const { OAuth2Client } = require("google-auth-library");
+const crypto = require("crypto");
+const {sendResetMail} = require('../services/forgotMail.service');
 
 //register controller
 
@@ -55,7 +57,6 @@ async function regUser(req, res) {
       msg: "Registration is successfully",
       success: true,
     });
-
   } catch (error) {
     console.log(error.message);
 
@@ -63,10 +64,8 @@ async function regUser(req, res) {
       msg: "Unauthorized Access denied!",
       success: false,
     });
-
   }
 }
-
 
 //Login controller
 
@@ -118,7 +117,6 @@ async function loginUser(req, res) {
       msg: "Login is successfully",
       success: true,
     });
-
   } catch (error) {
     console.log(error.message);
     res.status(401).json({
@@ -127,6 +125,101 @@ async function loginUser(req, res) {
     });
   }
 }
+
+//Forgot Password
+
+async function forgotPassword(req, res) {
+  try {
+    const { email } = req.body;
+
+    const resetToken = crypto.randomBytes(32).toString("hex");
+
+    const hashResetToken = crypto
+      .createHash("sha256")
+      .update(resetToken)
+      .digest("hex");
+
+    const user = await authModel.findOne({ email });
+
+    if (!user) {
+      return res.status(200).json({
+        success: true,
+        message: "If an account with that email exists, we've sent a password reset link.",
+      });
+    }
+
+    // user date update 
+    user.resetPasswordToken =hashResetToken;
+    user.resetPasswordExpire =  Date.now() + 15 * 60 * 1000;
+
+    await user.save()
+
+    //url for mail
+    const resetUrl = `${process.env.CLIENT_URL}/reset-password/${resetToken}`;
+
+    await sendResetMail({resetUrl, email:user.email})
+
+    res.status(200).json({
+      success:true,
+      message:"Password reset link sent successfully."
+    })
+
+
+  } catch (error) {
+    console.log(error.message)
+    res.status(500).json({
+      success:false,
+      message:"Failed to send reset link"
+    })
+  }
+}
+
+async function resetPassword(req,res) {
+  try {
+    
+    const {newPassword} = req.body;
+    const {resetToken} = req.params;
+
+    const hashResetToken = crypto.createHash("sha256").update(resetToken).digest('hex');
+
+    const user = await authModel.findOne({resetPasswordToken:hashResetToken, resetPasswordExpire:{ $gt:Date.now()},});
+
+    //agar user exist na karta ho or token expire ho gya ho toh return sms
+
+    if(!user){
+      return res.status(400).json({
+        success:false,
+        message:"Invalid or expired reset token !"
+      })
+    }
+
+    //convert normal password to hash password
+    const hashNewPassword = await bcrypt.hash(newPassword,10);
+
+    //update user details
+    user.password = hashNewPassword;
+    user.resetPasswordToken = undefined;
+    user.resetPasswordExpire = undefined;
+
+    await user.save();
+
+    res.clearCookie("token");
+    
+    res.status(201).json({
+      success:true,
+      message:"Password reset successfully. Please login with your new password."
+    })
+
+  } catch (error) {
+    console.log(error.message)
+    res.status(500).json({
+      success:false,
+      message:"Failed reset password."
+    })
+  }
+}
+
+//User logout
 
 async function logoutUser(req, res) {
   const token = req.cookies.token;
@@ -151,6 +244,8 @@ async function logoutUser(req, res) {
   }
 }
 
+// User data
+
 async function getMe(req, res) {
   try {
     const info = await authModel.findById({ _id: req.user.id });
@@ -164,10 +259,9 @@ async function getMe(req, res) {
         email: info.email,
         userPlan: info.userPlan,
         reportsUsed: info.reportsUsed,
-        reportLimit:info.reportLimit
+        reportLimit: info.reportLimit,
       },
     });
-
   } catch (error) {
     console.log(error.message);
     res.status(401).json({
@@ -176,6 +270,8 @@ async function getMe(req, res) {
     });
   }
 }
+
+//Google Button
 
 async function googleLogin(req, res) {
   const { token } = req.body;
@@ -218,4 +314,12 @@ async function googleLogin(req, res) {
   });
 }
 
-module.exports = { regUser, loginUser, logoutUser, getMe, googleLogin };
+module.exports = {
+  regUser,
+  loginUser,
+  forgotPassword,
+  resetPassword,
+  logoutUser,
+  getMe,
+  googleLogin,
+};

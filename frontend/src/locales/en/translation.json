@@ -29,6 +29,62 @@
     "card3":"Get personalized suggestions"
 },
 
+"forgotPassword": {
+    "left": {
+      "title1": "Forgot",
+      "title2": "Password?",
+      "description": "No worries! Enter your email address and we'll send you a link to reset your password.",
+      "steps": [
+        "Check your email inbox",
+        "Click the reset link",
+        "Create a new password"
+      ],
+      "back": "Back to Login"
+    },
+    "right": {
+      "title": "Reset Your Password",
+      "description": "Enter your registered email address below and we'll send you a password reset link.",
+      "email": "Email",
+      "placeholder": "Enter your email address",
+      "button": "Send Reset Link",
+      "securityTitle": "Secure & Private",
+      "securityDesc": "Your information is safe with us. We never share your email with anyone."
+    }
+},
+
+"resetPassword": {
+    "left": {
+      "title1": "Reset Your",
+      "title2": "Password",
+      "description": "Almost there! Enter your new password and you're all set to go.",
+      "features": [
+        "Choose a strong password",
+        "Keep your account secure",
+        "Don't share your password",
+        "You'll be redirected to login"
+      ],
+      "back": "Back to Login"
+    },
+    "right": {
+      "title": "Create New Password",
+      "description": "Enter your new password below. Make sure it's strong and secure.",
+      "newPassword": "New Password",
+      "newPasswordPlaceholder": "Enter new password",
+      "confirmPassword": "Confirm New Password",
+      "confirmPasswordPlaceholder": "Confirm new password",
+      "strength": "Password Strength",
+      "requirementsTitle": "Password must contain:",
+      "requirements": {
+        "length": "At least 8 characters",
+        "uppercase": "One uppercase letter",
+        "lowercase": "One lowercase letter",
+        "number": "One number or symbol"
+      },
+      "button": "Reset Password",
+      "footer": "Your password is encrypted and secure"
+    }
+},
+
 "nav": {
 "home": "Home",
 "features": "Features",

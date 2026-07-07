@@ -9,6 +9,8 @@ import FAQ from './features/interview/pages/FAQ.jsx'
 import HowItWork from './features/interview/pages/HowItWork.jsx'
 import RootLayout from './RootLayout.jsx'
 import InterviewView from './features/interview/pages/InterviewView.jsx'
+import ForgotPassword from "./features/auth/pages/ForgotPassword.jsx";
+import ResetPassword from "./features/auth/pages/ResetPassword.jsx";
 
 export const router = createBrowserRouter([
     {
@@ -18,6 +20,14 @@ export const router = createBrowserRouter([
     {
         path: "/register",
         element: <Register />
+    },
+    {
+        path: "/forgot-password",
+        element: <ForgotPassword />
+    },
+    {
+        path: "/reset-password/:resetToken",
+        element: <ResetPassword />
     },
     {
         element: <RootLayout />,
