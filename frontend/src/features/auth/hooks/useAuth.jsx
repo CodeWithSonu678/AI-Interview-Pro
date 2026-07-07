@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../auth.context.jsx";
-import { login, register,forgotPassword,resetPassword, logout, getMe, googleLogin } from '../services/auth.api.js';
+import { login, register, forgotPassword, resetPassword, logout, getMe, googleLogin } from '../services/auth.api.js';
 import { useNavigate } from 'react-router'
 import toast from "react-hot-toast";
 import { InterviewContent } from "../../interview/interview.content.jsx";
@@ -54,9 +54,9 @@ export const useAuth = () => {
             //success
             const me = await getMe();
             setUser(me.user)
-            
+
             return data;
-            
+
         } catch (error) {
             const message =
                 error?.response?.data?.msg ||
@@ -81,9 +81,9 @@ export const useAuth = () => {
             if (!data.success) {
                 throw data.msg;
             }
-            
+
             return data;
-            
+
         } catch (error) {
             const message =
                 error?.response?.data?.message ||
@@ -98,19 +98,19 @@ export const useAuth = () => {
         }
     }
 
-    const resetPasswordHandle = async (resetToken,newPassword) => {
+    const resetPasswordHandle = async (resetToken, newPassword) => {
         setLoading(true)
         setLoadingMessage("please wait...")
         try {
-            const data = await resetPassword(resetToken,newPassword)
+            const data = await resetPassword(resetToken, newPassword)
 
             //agar reset fail hua toh catch code chlao
             if (!data.success) {
                 throw data.msg;
             }
-            
+
             return data;
-            
+
         } catch (error) {
             const message =
                 error?.response?.data?.message ||
@@ -148,6 +148,8 @@ export const useAuth = () => {
             const data = await googleLogin(token)
 
             if (data.success === true) {
+                const me = await getMe();
+                setUser(me.user)
                 Navigate('/')
             }
             return data;

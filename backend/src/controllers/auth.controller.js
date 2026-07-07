@@ -297,7 +297,7 @@ async function googleLogin(req, res) {
 
   const payload = ticket.getPayload();
 
-  let user = await authModel.findOne({ email: payload.email });
+  const user = await authModel.findOne({ email: payload.email });
 
   if (!user) {
     user = await authModel.create({
@@ -318,11 +318,22 @@ async function googleLogin(req, res) {
     process.env.SECRET_KEY,
   );
 
-  res.cookie("token", jwt_token);
+  res.cookie("token", jwt_token, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "lax",
+    maxAge: 7 * 24 * 60 * 60 * 1000,
+  });
 
   res.status(201).json({
     msg: "Login is successfully",
     success: true,
+    user: {
+    id: user._id,
+    username: user.username,
+    email: user.email,
+    avatar: user.avatar,
+  },
   });
 }
 
