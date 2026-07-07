@@ -329,11 +329,13 @@ async function googleLogin(req, res) {
     msg: "Login is successfully",
     success: true,
     user: {
-    id: user._id,
-    username: user.username,
-    email: user.email,
-    avatar: user.avatar,
-  },
+      id: user._id,
+      username: user.username,
+      email: user.email,
+      userPlan: user.userPlan,
+      reportsUsed: user.reportsUsed,
+      reportLimit: user.reportLimit,
+    },
   });
 }
 

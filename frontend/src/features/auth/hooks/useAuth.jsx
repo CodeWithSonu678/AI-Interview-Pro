@@ -148,8 +148,7 @@ export const useAuth = () => {
             const data = await googleLogin(token)
 
             if (data.success === true) {
-                const me = await getMe();
-                setUser(me.user)
+                setUser(data.user)
                 Navigate('/')
             }
             return data;
