@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const { OAuth2Client } = require("google-auth-library");
 const crypto = require("crypto");
-const {sendResetMail} = require('../services/forgotMail.service');
+const { sendResetMail } = require("../services/forgotMail.service");
 
 //register controller
 
@@ -144,57 +144,69 @@ async function forgotPassword(req, res) {
     if (!user) {
       return res.status(200).json({
         success: true,
-        message: "If an account with that email exists, we've sent a password reset link.",
+        message:
+          "If an account with that email exists, we've sent a password reset link.",
       });
     }
 
-    // user date update 
-    user.resetPasswordToken =hashResetToken;
-    user.resetPasswordExpire =  Date.now() + 15 * 60 * 1000;
+    if (user.resetPasswordToken && user.resetPasswordExpire > Date.now()) {
+      return res.status(429).json({
+        success: false,
+        message:
+          "A password reset link has already been sent. Please check your email or wait 15 minutes before requesting another.",
+      });
+    }
 
-    await user.save()
+    // user date update
+    user.resetPasswordToken = hashResetToken;
+    user.resetPasswordExpire = Date.now() + 15 * 60 * 1000;
+
+    await user.save();
 
     //url for mail
     const resetUrl = `${process.env.CLIENT_URL}/reset-password/${resetToken}`;
 
-    await sendResetMail({resetUrl, email:user.email})
+    await sendResetMail({ resetUrl, email: user.email });
 
     res.status(200).json({
-      success:true,
-      message:"Password reset link sent successfully."
-    })
-
-
+      success: true,
+      message: "Password reset link sent successfully.",
+    });
   } catch (error) {
-    console.log(error.message)
+    console.log(error.message);
     res.status(500).json({
-      success:false,
-      message:"Failed to send reset link"
-    })
+      success: false,
+      message: "Failed to send reset link",
+    });
   }
 }
 
-async function resetPassword(req,res) {
+async function resetPassword(req, res) {
   try {
-    
-    const {newPassword} = req.body;
-    const {resetToken} = req.params;
+    const { newPassword } = req.body;
+    const { resetToken } = req.params;
 
-    const hashResetToken = crypto.createHash("sha256").update(resetToken).digest('hex');
+    const hashResetToken = crypto
+      .createHash("sha256")
+      .update(resetToken)
+      .digest("hex");
 
-    const user = await authModel.findOne({resetPasswordToken:hashResetToken, resetPasswordExpire:{ $gt:Date.now()},});
+    const user = await authModel.findOne({
+      resetPasswordToken: hashResetToken,
+      resetPasswordExpire: { $gt: Date.now() },
+    });
 
     //agar user exist na karta ho or token expire ho gya ho toh return sms
 
-    if(!user){
+    if (!user) {
       return res.status(400).json({
-        success:false,
-        message:"Invalid or expired reset token !"
-      })
+        success: false,
+        message: "Invalid or expired reset token !",
+      });
     }
 
     //convert normal password to hash password
-    const hashNewPassword = await bcrypt.hash(newPassword,10);
+    const hashNewPassword = await bcrypt.hash(newPassword, 10);
 
     //update user details
     user.password = hashNewPassword;
@@ -204,18 +216,18 @@ async function resetPassword(req,res) {
     await user.save();
 
     res.clearCookie("token");
-    
-    res.status(201).json({
-      success:true,
-      message:"Password reset successfully. Please login with your new password."
-    })
 
+    res.status(201).json({
+      success: true,
+      message:
+        "Password reset successfully. Please login with your new password.",
+    });
   } catch (error) {
-    console.log(error.message)
+    console.log(error.message);
     res.status(500).json({
-      success:false,
-      message:"Failed reset password."
-    })
+      success: false,
+      message: "Failed reset password.",
+    });
   }
 }
 
